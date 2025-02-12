@@ -136,10 +136,13 @@ export default function RegisterEmployee() {
   return (
     <Box sx={{
       marginLeft: { md: '250px' }, // Offset content for the sidebar
-      marginTop: '4rem'
+      marginTop: { xs: '5rem', md: '3rem' }
     }}>
       <Sidebar />
-      <Container sx={{ padding: '1px' }}>
+      <Container sx={{
+        padding: '1px',
+        marginBottom: '2rem'
+      }}>
         <Box component="main"
           sx={{
             boxShadow: '1px 2px 10px 0.5px lightblue',
@@ -151,9 +154,11 @@ export default function RegisterEmployee() {
             maxWidth: { xs: '95% !important', sm: '600px !important' }
           }}>
           <div>
-            <Box display='flex'
-              flexDirection='column'
+            <Box display='grid'
+              gridTemplateColumns='1fr 3fr'
+              placeItems='center'
               alignItems='center'
+              marginBottom={2}
               gap='1rem'>
               <Avatar>
                 <PersonAddIcon />

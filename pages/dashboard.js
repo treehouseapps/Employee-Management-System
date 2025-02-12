@@ -55,12 +55,11 @@ const Dashboard = () => {
     return (
         <Box sx={{
             marginLeft: { md: '250px' }, // Offset content for the sidebar
-            marginTop: '4rem'
         }}>
             <Sidebar />
             <Box sx={{
                 padding: { xs: '0.5rem 1rem', md: '1rem 2rem' },
-                position: 'relative'
+                position: 'relative',
             }}>
                 <Backdrop
                     sx={{
@@ -75,16 +74,18 @@ const Dashboard = () => {
                 </Backdrop>
                 <Typography variant="h4" component="h1" sx={{
                     fontWeight: 'bold',
+                    marginTop: { xs: '6rem', md: '5rem' },
                     color: 'black',
+                    marginLeft: { xs: '2rem', md: 0 },
                     fontSize: { xs: '1.5rem', md: '2rem' },
                 }}>
                     Dashboard Overview
                 </Typography>
                 <Box display='grid'
                     gridTemplateColumns={{
-                        xs: '1fr',           // Single column on mobile
-                        sm: 'repeat(2, 1fr)', // Two columns on tablet
-                        md: 'repeat(3, 1fr)'  // Three columns on desktop
+                        xs: '1fr',
+                        sm: 'repeat(2, 1fr)',
+                        md: 'repeat(3, 1fr)'
                     }}
                     gap={2}>
                     <Box

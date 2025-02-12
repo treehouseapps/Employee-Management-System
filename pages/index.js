@@ -1,6 +1,5 @@
 import React from 'react';
 import { Container, Typography, Button, Box } from '@mui/material';
-import { ArrowForward } from '@mui/icons-material';
 import Sidebar from '../components/sidebar';
 
 export default function Home() {

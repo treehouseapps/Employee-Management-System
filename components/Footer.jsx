@@ -11,10 +11,11 @@ const Footer = () => {
             sx={{
                 backgroundColor: '#2C3E50',
                 color: '#ECF0F1',
-                py: 3,
+                py: { xs: 1, md: 3 },
                 position: 'absolute',
                 bottom: 0,
-                width: '100%'
+                width: '100%',
+                zIndex: 2200
             }}
         >
             <Container maxWidth="lg">
@@ -27,12 +28,10 @@ const Footer = () => {
                         gap: 2
                     }}
                 >
-                    {/* Copyright Text */}
                     <Typography variant="body2" sx={{ fontFamily: 'Quicksand' }}>
                         © {new Date().getFullYear()} THa. All rights reserved.
                     </Typography>
 
-                    {/* Social Links */}
                     <Box sx={{ display: 'flex', gap: 2 }}>
                         <IconButton
                             component={Link}

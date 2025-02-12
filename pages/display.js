@@ -231,11 +231,12 @@ export default function DisplayEmployee() {
                     variant="h5"
                     sx={{
                         marginBottom: '1rem',
+                        marginTop: { xs: '1.5rem', md: 0 },
                         fontWeight: 'bold',
                         fontSize: { xs: '1.2rem', sm: '1.5rem' }
                     }}
                 >
-                    Displayed Results
+                    Results Overview
                 </Typography>
                 <Divider sx={{ marginBottom: '1rem', width: '100%' }} />
 
