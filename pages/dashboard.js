@@ -10,8 +10,8 @@ import {
     Woman as WomanIcon,
     Storefront
 } from '@mui/icons-material';
-import Sidebar from '../components/sidebar';
 import { useState, useEffect } from 'react';
+import Navbar from '../components/navbar';
 
 const Dashboard = () => {
     const [employees, setEmployees] = useState([]);
@@ -53,10 +53,8 @@ const Dashboard = () => {
     };
 
     return (
-        <Box sx={{
-            marginLeft: { md: '250px' }, // Offset content for the sidebar
-        }}>
-            <Sidebar />
+        <Box>
+            <Navbar />
             <Box sx={{
                 padding: { xs: '0.5rem 1rem', md: '1rem 2rem' },
                 position: 'relative',
@@ -74,7 +72,6 @@ const Dashboard = () => {
                 </Backdrop>
                 <Typography variant="h4" component="h1" sx={{
                     fontWeight: 'bold',
-                    marginTop: { xs: '6rem', md: '5rem' },
                     color: 'black',
                     marginLeft: { xs: '2rem', md: 0 },
                     fontSize: { xs: '1.5rem', md: '2rem' },
@@ -89,57 +86,67 @@ const Dashboard = () => {
                     }}
                     gap={2}>
                     <Box
-                        display='flex'
+                        display='inline-block'
                         alignItems='center'
                         justifyContent='center'
                         margin={2}
                         height='max-content'
+                        padding={'.5rem 1rem'}
+                        pr={4}
+                        backgroundColor='white'
                         borderRadius={4}
                         width='max-content'>
                         <Box sx={{
-                            backgroundColor: 'skyblue',
-                            padding: '1rem',
-                            borderTopLeftRadius: '20%',
-                            borderBottomLeftRadius: '20%',
+                            backgroundColor: '#FFB343',
+                            p: '0px 2px',
+                            borderRadius: '20%',
+                            width: 'max-content',
+                            mt: '1rem'
                         }}>
-                            <GroupsIcon fontSize='large'
-                                sx={{ color: 'white', marginTop: '0.5rem' }} />
+                            <GroupsIcon sx={{ color: 'white', fontSize: '1.8rem' }} />
                         </Box>
-                        <Box p={2} backgroundColor='white'>
-                            <Typography variant="h6" component="h2" sx={{
-                                fontWeight: 'bold',
-                                fontSize: '1rem',
+                        <Box p={'.2rem'}>
+                            <Typography sx={{
+                                fontWeight: 'bold', margin: '.5rem 0rem',
+                                fontSize: '.8rem',
                             }}>
                                 Total Employees
                             </Typography>
-                            <Typography>{dashboardData.totalEmployees}</Typography>
+                            <Typography fontSize={17} fontWeight={'bold'}>23{dashboardData.totalEmployees}0.5</Typography>
+                            <Typography fontSize={'13px'} mb={'1rem'} mt={'.2rem'}>Task</Typography>
+                            <Typography color='#0BDA51' fontSize={'13px'}>+35% This Month</Typography>
                         </Box>
                     </Box>
                     <Box
-                        display='flex'
+                        display='inline-block'
                         alignItems='center'
                         justifyContent='center'
                         margin={2}
                         height='max-content'
+                        padding={'.5rem 1rem'}
+                        pr={4}
+                        backgroundColor='white'
                         borderRadius={4}
                         width='max-content'>
                         <Box sx={{
-                            backgroundColor: 'skyblue',
-                            padding: '1rem',
-                            borderTopLeftRadius: '20%',
-                            borderBottomLeftRadius: '20%',
+                            backgroundColor: '#FFB343',
+                            p: '0px 2px',
+                            borderRadius: '20%',
+                            width: 'max-content',
+                            mt: '1rem'
                         }}>
-                            <Apartment fontSize='large'
-                                sx={{ color: 'white', marginTop: '0.5rem' }} />
+                            <GroupsIcon sx={{ color: 'white', fontSize: '1.8rem' }} />
                         </Box>
-                        <Box p={2} backgroundColor='white'>
-                            <Typography variant="h6" component="h2" sx={{
-                                fontWeight: 'bold',
-                                fontSize: '1rem',
+                        <Box p={'.2rem'}>
+                            <Typography sx={{
+                                fontWeight: 'bold', margin: '.5rem 0rem',
+                                fontSize: '.8rem',
                             }}>
                                 Total Departments
                             </Typography>
-                            <Typography>{dashboardData.totalDepartments}</Typography>
+                            <Typography fontSize={17} fontWeight={'bold'}>1{dashboardData.totalDepartments}97</Typography>
+                            <Typography fontSize={'13px'} mb={'1rem'} mt={'.2rem'}>Task</Typography>
+                            <Typography color='#0BDA51' fontSize={'13px'}>5% This Month</Typography>
                         </Box>
                     </Box>
                 </Box>
@@ -511,7 +518,7 @@ const Dashboard = () => {
                     </Box>
                 </Box>
             </Box>
-        </Box>
+        </Box >
     );
 }
 

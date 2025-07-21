@@ -18,7 +18,7 @@ import {
 import EditIcon from '@mui/icons-material/Edit';
 import { useState, useEffect } from 'react';
 import { Email as EmailIcon, LocalPhone, InboxOutlined, Fingerprint, Wc, CalendarToday, BusinessCenter, WorkHistory } from '@mui/icons-material';
-import Sidebar from '../components/sidebar';
+import Navbar from '../components/navbar';
 import { useMessage } from '../components/MessageContext';
 
 const EMPLOYMENT_DEPARTEMENT = {
@@ -209,11 +209,8 @@ export default function DisplayEmployee() {
     const getEmploymentDepartementText = (statusCode) => EMPLOYMENT_DEPARTEMENT[statusCode] || 'Unknown';
 
     return (
-        <Box sx={{
-            marginLeft: { md: '250px' }, // Offset content for the sidebar
-            marginTop: '4rem'
-        }}>
-            <Sidebar />
+        <Box >
+            <Navbar />
             <Container
                 component="main"
                 sx={{

@@ -1,5 +1,6 @@
 import '../styles/globals.css'
-import Navbar from '../components/navbar'
+import { Box } from '@mui/material';
+import Sidebar from '../components/sidebar'
 import Footer from '../components/Footer'
 import { MessageProvider } from '../components/MessageContext';
 import Head from 'next/head'
@@ -13,8 +14,10 @@ function MyApp({ Component, pageProps }) {
       </Head>
       <div style={{ position: 'relative', minHeight: '100vh', paddingBottom: '80px', backgroundColor: '#F5F9FA' }}>
         <MessageProvider>
-          <Navbar />
-          <Component {...pageProps} />
+          <Box display={'grid'} gridTemplateColumns={'1fr 5fr'}>
+            <Sidebar />
+            <Component {...pageProps} />
+          </Box>
           <Footer />
         </MessageProvider>
       </div>

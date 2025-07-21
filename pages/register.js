@@ -14,7 +14,7 @@ import {
 } from '@mui/material';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import Loading from '../components/loading';
-import Sidebar from '../components/sidebar';
+import Navbar from '../components/navbar';
 import { useMessage } from '../components/MessageContext';
 
 export default function RegisterEmployee() {
@@ -134,11 +134,8 @@ export default function RegisterEmployee() {
   };
 
   return (
-    <Box sx={{
-      marginLeft: { md: '250px' }, // Offset content for the sidebar
-      marginTop: { xs: '5rem', md: '3rem' }
-    }}>
-      <Sidebar />
+    <Box >
+      <Navbar />
       <Container sx={{
         padding: '1px',
         marginBottom: '2rem'
