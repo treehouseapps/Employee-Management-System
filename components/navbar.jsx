@@ -45,8 +45,8 @@ function Navbar() {
                             <Button
                                 color="inherit"
                                 startIcon={<Home />}
-                                fontFamily='Quicksand'
                                 sx={{
+                                    fontFamily: 'Quicksand',
                                     color: 'black',
                                     fontSize: { xs: '0.8rem', sm: '1rem' },
                                 }}
@@ -58,9 +58,9 @@ function Navbar() {
                             <Button
                                 color="inherit"
                                 startIcon={<Logout />}
-                                fontFamily='Quicksand'
                                 sx={{
                                     color: 'black',
+                                    fontFamily: 'Quicksand',
                                     fontSize: { xs: '0.8rem', sm: '1rem' },
                                 }}
                             >

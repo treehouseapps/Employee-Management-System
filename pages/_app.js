@@ -12,7 +12,7 @@ function MyApp({ Component, pageProps }) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title>Employee Management System</title>
       </Head>
-      <div style={{ position: 'relative', minHeight: '100vh', paddingBottom: '80px', backgroundColor: '#F5F9FA' }}>
+      <div style={{ position: 'relative', minHeight: '100vh', paddingBottom: '80px', backgroundColor: 'white' }}>
         <MessageProvider>
           <Box display={'grid'} gridTemplateColumns={'1fr 5fr'}>
             <Sidebar />

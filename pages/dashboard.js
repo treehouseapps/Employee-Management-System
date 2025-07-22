@@ -1,17 +1,18 @@
-import { Box, Typography, Divider, Backdrop, CircularProgress } from '@mui/material';
+import { Box, Typography, Divider, Backdrop, CircularProgress, Grid } from '@mui/material';
 import {
     Apartment,
     BusinessCenter,
     AccountBalance,
     Engineering,
     Groups as GroupsIcon,
-    Man as ManIcon,
     Memory,
-    Woman as WomanIcon,
-    Storefront
+    Storefront,
+    Man,
+    Woman
 } from '@mui/icons-material';
 import { useState, useEffect } from 'react';
 import Navbar from '../components/navbar';
+import Piechart from '../components/piechart';
 
 const Dashboard = () => {
     const [employees, setEmployees] = useState([]);
@@ -49,8 +50,20 @@ const Dashboard = () => {
             parttime: employees?.filter(emp => emp?.employmentStatus === 'Part Time')?.length || 0,
             contract: employees?.filter(emp => emp?.employmentStatus === 'Contract')?.length || 0,
             internship: employees?.filter(emp => emp?.employmentStatus === 'Internship')?.length || 0
+        },
+        genderDistribution: {
+            male: employees?.filter(emp => emp?.gender === 'Male')?.length || 0,
+            female: employees?.filter(emp => emp?.gender === 'Female')?.length || 0
         }
+
     };
+    const statusData = [
+        { name: 'Full Time', value: dashboardData.employmentStatus.fulltime },
+        { name: 'Part Time', value: dashboardData.employmentStatus.parttime },
+        { name: 'Contract', value: dashboardData.employmentStatus.contract },
+        { name: 'Internship', value: dashboardData.employmentStatus.internship },
+    ];
+
 
     return (
         <Box>
@@ -73,6 +86,7 @@ const Dashboard = () => {
                 <Typography variant="h4" component="h1" sx={{
                     fontWeight: 'bold',
                     color: 'black',
+                    fontFamily: 'Quicksand',
                     marginLeft: { xs: '2rem', md: 0 },
                     fontSize: { xs: '1.5rem', md: '2rem' },
                 }}>
@@ -81,12 +95,13 @@ const Dashboard = () => {
                 <Box display='grid'
                     gridTemplateColumns={{
                         xs: '1fr',
-                        sm: 'repeat(2, 1fr)',
-                        md: 'repeat(3, 1fr)'
+                        sm: 'repeat(4, 1fr)',
+                        md: 'repeat(6, 1fr)'
                     }}
-                    gap={2}>
+                >
                     <Box
                         display='inline-block'
+                        boxShadow={'1px 1px 10px 1px lightgray'}
                         alignItems='center'
                         justifyContent='center'
                         margin={2}
@@ -95,7 +110,8 @@ const Dashboard = () => {
                         pr={4}
                         backgroundColor='white'
                         borderRadius={4}
-                        width='max-content'>
+                        width='max-content'
+                        minHeight='200px' >
                         <Box sx={{
                             backgroundColor: '#FFB343',
                             p: '0px 2px',
@@ -119,6 +135,7 @@ const Dashboard = () => {
                     </Box>
                     <Box
                         display='inline-block'
+                        boxShadow={'1px 1px 10px 1px lightgray'}
                         alignItems='center'
                         justifyContent='center'
                         margin={2}
@@ -127,9 +144,10 @@ const Dashboard = () => {
                         pr={4}
                         backgroundColor='white'
                         borderRadius={4}
-                        width='max-content'>
+                        width='max-content'
+                        minHeight='200px' >
                         <Box sx={{
-                            backgroundColor: '#FFB343',
+                            backgroundColor: '#0066FF',
                             p: '0px 2px',
                             borderRadius: '20%',
                             width: 'max-content',
@@ -149,6 +167,47 @@ const Dashboard = () => {
                             <Typography color='#0BDA51' fontSize={'13px'}>5% This Month</Typography>
                         </Box>
                     </Box>
+                    <Box
+                        display='inline-block'
+                        boxShadow={'1px 1px 10px 1px lightgray'}
+                        alignItems='center'
+                        justifyContent='center'
+                        margin={2}
+                        height='max-content'
+                        padding={'.5rem 1rem'}
+                        pr={4}
+                        backgroundColor='white'
+                        borderRadius={4}
+                        width='max-content'
+                        minHeight='200px' >
+                        <Box sx={{
+                            backgroundColor: '#7C3AED',
+                            p: '0px 2px',
+                            borderRadius: '20%',
+                            width: 'max-content',
+                            mt: '1rem'
+                        }}>
+                            <GroupsIcon sx={{ color: 'white', fontSize: '1.8rem' }} />
+                        </Box>
+                        <Box p={'.2rem'}>
+                            <Typography sx={{
+                                fontWeight: 'bold', margin: '.5rem 0rem',
+                                fontSize: '.8rem',
+                            }}>Gender Distribution</Typography>
+                            <Grid container spacing={2} alignItems="center">
+                                <Grid item xs={6} display="flex" alignItems="center" gap={1}>
+                                    <Man color="primary" />
+                                    <Typography>{dashboardData.genderDistribution.male}</Typography>
+                                </Grid>
+                                <Grid item xs={6} display="flex" alignItems="center" gap={1}>
+                                    <Woman color="secondary" />
+                                    <Typography>{dashboardData.genderDistribution.female}</Typography>
+                                </Grid>
+                            </Grid>
+
+                        </Box>
+                    </Box>
+                    <Piechart data={statusData} />
                 </Box>
                 <Divider sx={{ margin: '.5rem' }} />
                 <Box p={1}>
