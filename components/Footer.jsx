@@ -29,7 +29,7 @@ const Footer = () => {
                     }}
                 >
                     <Typography variant="body2" sx={{ fontFamily: 'Quicksand' }}>
-                        © {new Date().getFullYear()} THa. All rights reserved.
+                        © {new Date().getFullYear()} TreeHouseApps. All rights reserved.
                     </Typography>
 
                     <Box sx={{ display: 'flex', gap: 2 }}>

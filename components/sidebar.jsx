@@ -3,7 +3,15 @@ import { Box, InputAdornment, TextField, Typography } from '@mui/material';
 import Link from 'next/link';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import { House, Person, Search } from '@mui/icons-material';
+import {
+    House, Dashboard as DashboardIcon,
+    Group as EmployeesIcon,
+    PersonAdd as AddEmployeeIcon,
+    Apartment as DepartmentsIcon,
+    Settings as SettingsIcon,
+    PersonAddAlt as RegisterIcon,
+    MoreHoriz as OtherIcon, Search
+} from '@mui/icons-material';
 
 const Sidebar = () => {
     const [sidechar, setSideChar] = useState('none');
@@ -51,7 +59,7 @@ const Sidebar = () => {
             }}>
                 <Box display={'flex'} gap={1} alignItems={'center'}>
                     <House sx={{ fontSize: 40 }} />
-                    <Link href="/" passHref><Typography fontWeight={'bold'} fontSize={25}>TreeHouse</Typography></Link>
+                    <Link href="/" passHref><Box display={'flex'}><Typography fontWeight={'bold'} fontSize={25}>TreeHouse</Typography><Typography fontSize={15}>apps</Typography></Box></Link>
                 </Box>
                 <TextField
                     size="small"
@@ -72,21 +80,39 @@ const Sidebar = () => {
                 />
                 <Box
                     sx={{
-                        display: 'flex', flexDirection: 'column',
-                        alignItems: 'flex-start', gap: 1, p: 1,
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'flex-start',
+                        gap: 1,
+                        p: 1,
                     }}
                 >
                     <Typography sx={{ fontSize: '15px', margin: '.2rem' }}>Application</Typography>
 
-                    <Box display="flex" mb={1} gap={1} alignItems="center" fontWeight={'light'} >
-                        <Person /> <Link href="/dashboard" passHref>Dashboard</Link>
+                    <Box display="flex" mb={1} gap={1} alignItems="center" fontWeight={'light'}>
+                        <DashboardIcon fontSize="small" /> <Link href="/dashboard" passHref>Dashboard</Link>
                     </Box>
-                    <Box display="flex" mb={1} gap={1} alignItems="center" fontWeight={'light'} >
-                        <Person /> <Link href="/register" passHref>Register</Link>
+
+                    <Box display="flex" mb={1} gap={1} alignItems="center" fontWeight={'light'}>
+                        <EmployeesIcon fontSize="small" /> <Link href="/display" passHref>Employees</Link>
                     </Box>
+
+                    <Box display="flex" mb={1} gap={1} alignItems="center" fontWeight={'light'}>
+                        <AddEmployeeIcon fontSize="small" /> <Link href="/register" passHref>Add Employee</Link>
+                    </Box>
+
+                    <Box display="flex" mb={1} gap={1} alignItems="center" fontWeight={'light'}>
+                        <DepartmentsIcon fontSize="small" /> <Link href="/departments" passHref>Departments</Link>
+                    </Box>
+
                     <Typography sx={{ fontSize: '15px', margin: '.2rem' }}>Other</Typography>
-                    <Box display="flex" mb={1} gap={1} alignItems="center" fontWeight={'light'} >
-                        <Person /> <Link href="/register" passHref>Register</Link>
+
+                    <Box display="flex" mb={1} gap={1} alignItems="center" fontWeight={'light'}>
+                        <SettingsIcon fontSize="small" /> <Link href="/settings" passHref>Settings</Link>
+                    </Box>
+
+                    <Box display="flex" mb={1} gap={1} alignItems="center" fontWeight={'light'}>
+                        <RegisterIcon fontSize="small" /> <Link href="/register" passHref>Register</Link>
                     </Box>
                 </Box>
 

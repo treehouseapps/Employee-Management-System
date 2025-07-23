@@ -1,20 +1,9 @@
 import {
-    Avatar,
-    Box,
-    Typography,
-    Container,
-    Grid,
-    Divider,
-    Button,
-    Modal,
-    TextField,
-    CircularProgress,
-    FormControl,
-    InputLabel,
-    Select,
-    MenuItem,
-    FormHelperText,
+    Box, Typography, Container, Grid, Divider, Button,
+    Modal, TextField, CircularProgress, FormControl, InputLabel, Select,
+    MenuItem, FormHelperText, InputAdornment,
 } from '@mui/material';
+import SearchIcon from '@mui/icons-material/Search';
 import EditIcon from '@mui/icons-material/Edit';
 import { useState, useEffect } from 'react';
 import { Email as EmailIcon, LocalPhone, InboxOutlined, Fingerprint, Wc, CalendarToday, BusinessCenter, WorkHistory } from '@mui/icons-material';
@@ -206,8 +195,8 @@ export default function DisplayEmployee() {
         setEditErrors({});
     };
 
-    const getEmploymentDepartementText = (statusCode) => EMPLOYMENT_DEPARTEMENT[statusCode] || 'Unknown';
-
+    // const getEmploymentDepartementText = (statusCode) => EMPLOYMENT_DEPARTEMENT[statusCode] || 'Unknown';
+    const getEmploymentDepartementText = (id) => EMPLOYMENT_DEPARTEMENT[id] || 'Unknown';
     return (
         <Box >
             <Navbar />
@@ -223,18 +212,47 @@ export default function DisplayEmployee() {
                     maxWidth: '100% !important',
                 }}
             >
-                <Typography
-                    align="center"
-                    variant="h5"
+                <Box
                     sx={{
-                        marginBottom: '1rem',
-                        marginTop: { xs: '1.5rem', md: 0 },
-                        fontWeight: 'bold',
-                        fontSize: { xs: '1.2rem', sm: '1.5rem' }
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        flexDirection: { xs: 'column', sm: 'row' },
+                        gap: '1rem',
+                        mb: 2,
                     }}
                 >
-                    Results Overview
-                </Typography>
+                    <Typography
+                        variant="h5"
+                        sx={{
+                            fontSize: { xs: '1.2rem', sm: '1.5rem' },
+                            textAlign: { xs: 'center', sm: 'left' },
+                            flexGrow: 1,
+                            fontFamily: 'Quicksand'
+                        }}
+                    >
+                        Results Overview
+                    </Typography>
+
+                    <TextField
+                        size="small"
+                        variant="outlined"
+                        placeholder="Search"
+                        sx={{
+                            backgroundColor: 'white',
+                            borderRadius: '5px',
+                            width: { xs: '100%', sm: '300px' },
+                        }}
+                        InputProps={{
+                            endAdornment: (
+                                <InputAdornment position="end">
+                                    <SearchIcon sx={{ cursor: 'pointer' }} />
+                                </InputAdornment>
+                            ),
+                        }}
+                    />
+                </Box>
+
                 <Divider sx={{ marginBottom: '1rem', width: '100%' }} />
 
                 {loading ? (
@@ -256,111 +274,161 @@ export default function DisplayEmployee() {
                         </Typography>
                     </Box>
                 ) : (
-                    <Grid container spacing={{ xs: 1, sm: 2, md: 4 }}>
-                        {employees.map((employee) => (
-                            <Grid item xs={12} sm={6} md={4} lg={4} key={employee._id}>
-                                <Box
+
+                    // Listing Users
+
+                    <Grid
+                        container
+                        sx={{
+                            bgcolor: 'white',
+                            borderRadius: 2,
+                            boxShadow: '0 4px 16px rgba(0,0,0,0.08)',
+                            fontFamily: 'Quicksand',
+                            margin: 'auto',
+                            userSelect: 'none',
+                        }}
+                    >
+                        {/* Header Row */}
+                        <Grid
+                            container
+                            sx={{
+                                borderBottom: '3px solid #7F00FF',
+                                color: '#7F00FF',
+                                fontWeight: 'bold',
+                                fontSize: '0.85rem',
+                                paddingY: 1,
+                                textAlign: 'center',
+                                alignItems: 'center',
+                            }}
+                        >
+                            <Grid item xs={1}>No</Grid>
+                            <Grid item xs={2} sx={{ textAlign: 'left' }}>Name & Position</Grid>
+                            <Grid item xs={1}>Email</Grid>
+                            <Grid item xs={4}>Department</Grid>
+                            <Grid item xs={1.5}>Status</Grid>
+                            <Grid item xs={2} />
+                        </Grid>
+
+                        {/* Data Rows */}
+                        {employees.map((employee, index) => (
+                            <Grid
+                                container
+                                key={employee._id || index}
+                                sx={{
+                                    bgcolor: index % 2 === 0 ? '#f9f9f9' : 'transparent',
+                                    alignItems: 'center',
+                                    paddingY: 1,
+                                    paddingX: 1,
+                                    position: 'relative',
+                                    fontSize: { xs: '0.75rem', sm: '0.875rem' },
+                                    color: '#333',
+                                    '&:hover': { bgcolor: '#eae6ff' },
+                                }}
+                            >
+                                {/* No */}
+                                <Grid item xs={1} textAlign="center" fontWeight={600}>
+                                    {index + 1}
+                                </Grid>
+
+                                {/* Avatar + Name + Position */}
+                                <Grid
+                                    item
+                                    xs={2}
                                     sx={{
-                                        boxShadow: '1px 2px 10px 0.5px lightblue',
-                                        padding: { xs: '0.5rem', sm: '1rem' },
-                                        borderRadius: '.5rem',
-                                        textAlign: 'center',
-                                        backgroundColor: '#f9f9f9',
-                                        position: 'relative',
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        gap: 1,
+                                        textAlign: 'left',
+                                    }}
+                                >
+
+                                    <Box>
+                                        <Typography fontWeight={600}>{employee.name}</Typography>
+                                        <Typography variant="caption" color="text.secondary">
+                                            {employee.position}
+                                        </Typography>
+                                    </Box>
+                                </Grid>
+
+                                {/* Email */}
+                                <Grid item xs={2.5} sx={{ display: 'flex', flexDirection: 'column', gap: 0.3 }}>
+                                    <Typography sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
+                                        <EmailIcon fontSize="small" /> {employee.email}
+                                    </Typography>
+                                </Grid>
+
+                                {/* Department */}
+                                <Grid
+                                    item
+                                    xs={3}
+                                    sx={{ display: 'flex', alignItems: 'center', gap: 0.5, textTransform: 'capitalize' }}
+                                >
+                                    <BusinessCenter fontSize="small" /> {getEmploymentDepartementText(employee.department)}
+                                </Grid>
+
+                                {/* Employment Status */}
+                                <Grid
+                                    item
+                                    xs={1.5}
+                                    sx={{
+                                        fontWeight: 600,
+                                        color:
+                                            employee.employmentStatus === 'Full Time'
+                                                ? '#388e3c'
+                                                : '#f57c00',
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        gap: 0.5,
+                                        textTransform: 'capitalize',
+                                    }}
+                                >
+                                    <WorkHistory fontSize="small" /> {employee.employmentStatus || 'N/A'}
+                                </Grid>
+
+                                {/* Actions */}
+                                <Grid
+                                    item
+                                    xs={2}
+                                    sx={{
+                                        display: 'flex',
+                                        justifyContent: 'flex-end',
+                                        gap: 1,
                                     }}
                                 >
                                     {employee.empStatus === 'edited' && (
-                                        <EditIcon sx={{
-                                            position: 'absolute',
-                                            top: '10px',
-                                            right: '10px',
-                                            color: 'primary.main',
-                                            fontSize: '20px'
-                                        }} />
+                                        <EditIcon
+                                            color="primary"
+                                            sx={{ fontSize: 20, alignSelf: 'center', mr: 1 }}
+                                            titleAccess="Edited"
+                                        />
                                     )}
-                                    <Avatar
-                                        src={employee.img || '/placeholder.png'}
-                                        alt={employee.name}
-                                        sx={{
-                                            width: { xs: '60px', sm: '80px' },
-                                            height: { xs: '60px', sm: '80px' },
-                                            margin: '0 auto 1rem',
-                                            border: '.3rem solid lightblue',
-                                        }}
-                                    />
-                                    <Typography
-                                        variant="h6"
-                                        fontWeight="bold"
-                                        sx={{
-                                            fontSize: { xs: '1rem', sm: '1.25rem' }
-                                        }}
+
+                                    <Button
+                                        variant="outlined"
+                                        color="success"
+                                        size="small"
+                                        sx={{ fontWeight: 'bold', textTransform: 'none' }}
+                                        onClick={() => handleEditClick(employee)}
                                     >
-                                        {employee.name}
-                                    </Typography>
-                                    <Typography variant="subtitle2" color="textSecondary" gutterBottom>
-                                        {employee.position}
-                                    </Typography>
-                                    {/* Additional Details */}
-                                    <Box sx={{ textAlign: 'left', marginTop: '1rem' }}>
-                                        <Typography variant="body2" sx={{ display: 'flex', alignItems: 'center' }}>
-                                            <Fingerprint sx={{ marginRight: '0.5rem' }} /> {employee._id}
-                                        </Typography>
-                                        <Typography variant="body2" sx={{ display: 'flex', alignItems: 'center' }}>
-                                            <EmailIcon sx={{ marginRight: '0.5rem' }} /> {employee.email}
-                                        </Typography>
-                                        <Typography variant="body2" sx={{ display: 'flex', alignItems: 'center' }}>
-                                            <Wc sx={{ marginRight: '0.5rem' }} /> {employee.gender}
-                                        </Typography>
-                                        <Typography variant="body2" sx={{ display: 'flex', alignItems: 'center' }}>
-                                            <CalendarToday sx={{ marginRight: '0.5rem' }} /> {employee.age}
-                                        </Typography>
-                                        <Typography variant="body2" sx={{ display: 'flex', alignItems: 'center' }}>
-                                            <LocalPhone sx={{ marginRight: '0.5rem' }} /> {employee.phoneNumber}
-                                        </Typography>
-                                        <Typography variant="body2" sx={{ display: 'flex', alignItems: 'center' }}>
-                                            <BusinessCenter sx={{ marginRight: '0.5rem' }} /> {getEmploymentDepartementText(employee.department)}
-                                        </Typography>
-                                        <Typography variant="body2" sx={{ display: 'flex', alignItems: 'center' }}>
-                                            <WorkHistory sx={{ marginRight: '0.5rem' }} />
-                                            {employee.employmentStatus}
-                                        </Typography>
-                                    </Box>
-                                    <Box sx={{
-                                        display: 'flex',
-                                        justifyContent: 'space-between',
-                                        marginTop: '1rem',
-                                        gap: { xs: 1, sm: 2 }
-                                    }}>
-                                        <Button
-                                            variant="outlined"
-                                            color="success"
-                                            sx={{
-                                                fontWeight: 'bold',
-                                                fontSize: { xs: '0.75rem', sm: '0.875rem' },
-                                                padding: { xs: '4px 8px', sm: '6px 16px' }
-                                            }}
-                                            onClick={() => handleEditClick(employee)}
-                                        >
-                                            Edit
-                                        </Button>
-                                        <Button
-                                            variant="outlined"
-                                            color="error"
-                                            sx={{
-                                                fontWeight: 'bold',
-                                                fontSize: { xs: '0.75rem', sm: '0.875rem' },
-                                                padding: { xs: '4px 8px', sm: '6px 16px' }
-                                            }}
-                                            onClick={() => handleDeleteClick(employee)}
-                                        >
-                                            Delete
-                                        </Button>
-                                    </Box>
-                                </Box>
+                                        Edit
+                                    </Button>
+                                    <Button
+                                        variant="outlined"
+                                        color="error"
+                                        size="small"
+                                        sx={{ fontWeight: 'bold', textTransform: 'none' }}
+                                        onClick={() => handleDeleteClick(employee)}
+                                    >
+                                        Delete
+                                    </Button>
+                                </Grid>
                             </Grid>
                         ))}
                     </Grid>
                 )}
+
+                {/* Edit Modal */}
+
                 {tempEmpData && (
                     <Modal open={Boolean(tempEmpData)} onClose={handleClose}>
                         <Box
@@ -525,6 +593,9 @@ export default function DisplayEmployee() {
                         </Box>
                     </Modal>
                 )}
+
+                {/* Delete Modal */}
+
                 <Modal
                     open={deleteConfirmation.open}
                     onClose={handleCloseDeleteModal}

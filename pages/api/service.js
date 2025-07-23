@@ -31,7 +31,8 @@ export default async function handler(req, res) {
         } catch (error) {
             res.status(500).json({ message: 'Error saving employee', error: error.message });
         }
-    } else if (req.method === 'GET') {
+    }
+    else if (req.method === 'GET') {
         try {
             const { db } = await connectToDatabase();
             const collection = await db.collection('employees');
