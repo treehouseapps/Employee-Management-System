@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
     Box,
     Typography,
@@ -9,13 +9,15 @@ import {
     Chip,
     Divider,
     IconButton,
+    Menu,
+    MenuItem,
 } from '@mui/material';
 import BusinessIcon from '@mui/icons-material/Business';
 import AddIcon from '@mui/icons-material/Add';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import Navbar from '../components/navbar';
 
-const departments = [
+const initialDepartments = [
     { id: 1, name: 'Human Resources', employees: 14, status: 'Active' },
     { id: 2, name: 'Engineering', employees: 30, status: 'Active' },
     { id: 3, name: 'Sales', employees: 10, status: 'Inactive' },
@@ -24,6 +26,28 @@ const departments = [
 ];
 
 const Departments = () => {
+    const [departments, setDepartments] = useState(initialDepartments);
+    const [anchorEl, setAnchorEl] = useState(null);
+    const [selectedDeptId, setSelectedDeptId] = useState(null);
+
+    const handleMenuOpen = (event, id) => {
+        setAnchorEl(event.currentTarget);
+        setSelectedDeptId(id);
+    };
+
+    const handleMenuClose = () => {
+        setAnchorEl(null);
+        setSelectedDeptId(null);
+    };
+
+    const handleStatusChange = (newStatus) => {
+        setDepartments((prev) =>
+            prev.map((dept) =>
+                dept.id === selectedDeptId ? { ...dept, status: newStatus } : dept
+            )
+        );
+        handleMenuClose();
+    };
     return (
         <Box>
             <Navbar />
@@ -168,7 +192,13 @@ const Departments = () => {
                                         <Avatar sx={{ bgcolor: '#7F00FF', width: 32, height: 32, p: 1 }}>
                                             <BusinessIcon />
                                         </Avatar>
-                                        <IconButton>
+                                        {/* 3-dot menu */}
+                                        <IconButton
+                                            onClick={(e) => handleMenuOpen(e, dept.id)}
+                                            aria-controls={selectedDeptId === dept.id ? 'status-menu' : undefined}
+                                            aria-haspopup="true"
+                                            aria-expanded={selectedDeptId === dept.id ? 'true' : undefined}
+                                        >
                                             <MoreVertIcon />
                                         </IconButton>
                                     </Box>
@@ -201,6 +231,17 @@ const Departments = () => {
                     </Grid>
                 </Box>
             </Box>
+            <Menu
+                id="status-menu"
+                anchorEl={anchorEl}
+                open={Boolean(anchorEl)}
+                onClose={handleMenuClose}
+                anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+                transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+            >
+                <MenuItem onClick={() => handleStatusChange('Active')}>Active</MenuItem>
+                <MenuItem onClick={() => handleStatusChange('Inactive')}>Inactive</MenuItem>
+            </Menu>
         </Box>
     );
 };

@@ -112,7 +112,7 @@ const Sidebar = () => {
                     </Box>
 
                     <Box display="flex" mb={1} gap={1} alignItems="center" fontWeight={'light'}>
-                        <RegisterIcon fontSize="small" /> <Link href="/register" passHref>Register</Link>
+                        <RegisterIcon fontSize="small" /> <Link href="/login" passHref>Login</Link>
                     </Box>
                 </Box>
 
