@@ -120,11 +120,11 @@ const TopEmployeesList = () => {
                     <Box textAlign="center" fontWeight="600">{index + 1}</Box>
 
                     <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, fontWeight: 600 }}>
-                        {/* Optional small circle avatar with initials */}
+
                         <Avatar
                             sx={{ width: 28, height: 28, fontSize: '0.75rem', bgcolor: '#1976d2' }}
                             alt={name}
-                            src="" // If you want to pass images, put src={img}
+                            src=""
                         >
                             {name.split(' ').map(n => n[0]).join('').slice(0, 2).toUpperCase()}
                         </Avatar>
