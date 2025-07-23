@@ -62,50 +62,78 @@ const Departments = () => {
                         </Typography>
                     </Box>
 
-                    <Button
-                        variant="contained"
-                        startIcon={<AddIcon />}
-                        sx={{
-                            backgroundColor: '#7F00FF',
-                            fontWeight: 500,
-                            '&:hover': { backgroundColor: '#6900d1' },
-                        }}
-                    >
-                        Add Department
-                    </Button>
+
+                </Box>
+                <Box sx={{ width: '100%' }}>
+                    <Grid container spacing={2} alignItems="center" justifyContent="space-between">
+                        {/* Add Department Button */}
+                        <Grid item xs={12} md={3}>
+                            <Button
+                                fullWidth
+                                variant="contained"
+                                startIcon={<AddIcon />}
+                                sx={{
+                                    backgroundColor: '#7F00FF',
+                                    fontWeight: 500,
+                                    textTransform: 'none',
+                                    '&:hover': { backgroundColor: '#6900d1' },
+                                }}
+                            >
+                                Add Department
+                            </Button>
+                        </Grid>
+
+                        {/* Summary Cards */}
+                        <Grid item xs={12} md={9}>
+                            <Grid container spacing={2}>
+                                <Grid item xs={12} sm={6} md={4}>
+                                    <Paper
+                                        elevation={2}
+                                        sx={{
+                                            p: 2,
+                                            backgroundColor: '#fff',
+                                            borderRadius: 3,
+                                            textAlign: 'center',
+                                            display: 'inline-flex',
+                                            alignItems: 'center',
+                                            gap: '0.5rem'
+                                        }}
+                                    >
+                                        <Typography variant="subtitle2" sx={{ color: '#999' }}>
+                                            Total Departments
+                                        </Typography>
+                                        <Typography variant="h6">
+                                            {departments.length}
+                                        </Typography>
+                                    </Paper>
+                                </Grid>
+
+                                <Grid item xs={12} sm={6} md={4}>
+                                    <Paper
+                                        elevation={2}
+                                        sx={{
+                                            p: 2,
+                                            backgroundColor: '#fff',
+                                            borderRadius: 3,
+                                            textAlign: 'center',
+                                            display: 'inline-flex',
+                                            alignItems: 'center',
+                                            gap: '0.5rem'
+                                        }}
+                                    >
+                                        <Typography variant="subtitle2" sx={{ color: '#999' }}>
+                                            Active Departments
+                                        </Typography>
+                                        <Typography variant="h6">
+                                            {departments.filter((dept) => dept.status === 'Active').length}
+                                        </Typography>
+                                    </Paper>
+                                </Grid>
+                            </Grid>
+                        </Grid>
+                    </Grid>
                 </Box>
 
-                {/* Summary Cards */}
-                <Grid container spacing={3} sx={{ mb: 2 }}>
-                    <Grid item xs={12} sm={6} md={3}>
-                        <Paper
-                            elevation={2}
-                            sx={{ p: '5px 10px', backgroundColor: '#fff', borderRadius: 3 }}
-                        >
-                            <Typography variant="subtitle2" sx={{ color: '#999' }}>
-                                Total Departments
-                            </Typography>
-                            <Typography variant="h5" sx={{ fontWeight: 600 }}>
-                                {departments.length}
-                            </Typography>
-                        </Paper>
-                    </Grid>
-                    <Grid item xs={12} sm={6} md={3}>
-                        <Paper
-                            elevation={2}
-                            sx={{ p: '5px 10px', backgroundColor: '#fff', borderRadius: 3 }}
-                        >
-                            <Typography variant="subtitle2" sx={{ color: '#999' }}>
-                                Active Departments
-                            </Typography>
-                            <Typography variant="h5" sx={{ fontWeight: 600 }}>
-                                {
-                                    departments.filter((dept) => dept.status === 'Active').length
-                                }
-                            </Typography>
-                        </Paper>
-                    </Grid>
-                </Grid>
 
                 {/* Department List */}
                 <Box>
@@ -118,11 +146,11 @@ const Departments = () => {
 
                     <Grid container spacing={3}>
                         {departments.map((dept, index) => (
-                            <Grid item xs={12} sm={6} md={4} key={dept.id}>
+                            <Grid item xs={12} sm={6} md={3} key={dept.id}>
                                 <Paper
                                     elevation={1}
                                     sx={{
-                                        p: 3,
+                                        p: '8px 15px',
                                         borderRadius: 3,
                                         display: 'flex',
                                         flexDirection: 'column',
@@ -137,7 +165,7 @@ const Departments = () => {
                                             justifyContent: 'space-between',
                                         }}
                                     >
-                                        <Avatar sx={{ bgcolor: '#7F00FF' }}>
+                                        <Avatar sx={{ bgcolor: '#7F00FF', width: 32, height: 32, p: 1 }}>
                                             <BusinessIcon />
                                         </Avatar>
                                         <IconButton>
@@ -146,12 +174,12 @@ const Departments = () => {
                                     </Box>
 
                                     <Box>
-                                        <Typography variant="h6" sx={{ fontWeight: 600 }}>
+                                        <Typography fontSize={15} sx={{ fontWeight: 600 }}>
                                             {dept.name}
                                         </Typography>
                                         <Typography
                                             variant="body2"
-                                            sx={{ color: '#777', fontSize: '14px' }}
+                                            sx={{ color: '#777', fontSize: '13px' }}
                                         >
                                             {dept.employees} Employees
                                         </Typography>

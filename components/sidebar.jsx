@@ -26,7 +26,7 @@ const Sidebar = () => {
 
     return (
         <Box sx={{
-            height: { xs: iconHeight, md: '100vh' },
+            height: { xs: iconHeight, md: '110vh' },
             backgroundColor: '#7F00FF',
             boxShadow: '1px 2px 10px 0.5px lightgray',
             display: 'block',
