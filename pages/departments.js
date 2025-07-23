@@ -16,6 +16,7 @@ import BusinessIcon from '@mui/icons-material/Business';
 import AddIcon from '@mui/icons-material/Add';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import Navbar from '../components/navbar';
+import Link from 'next/link';
 
 const initialDepartments = [
     { id: 1, name: 'Human Resources', employees: 14, status: 'Active' },
@@ -92,7 +93,7 @@ const Departments = () => {
                     <Grid container spacing={2} alignItems="center" justifyContent="space-between">
                         {/* Add Department Button */}
                         <Grid item xs={12} md={3}>
-                            <Button
+                            <Link href='/login'>  <Button
                                 fullWidth
                                 variant="contained"
                                 startIcon={<AddIcon />}
@@ -104,7 +105,7 @@ const Departments = () => {
                                 }}
                             >
                                 Add Department
-                            </Button>
+                            </Button></Link>
                         </Grid>
 
                         {/* Summary Cards */}
