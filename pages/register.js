@@ -157,7 +157,7 @@ export default function RegisterEmployee() {
               alignItems='center'
               marginBottom={2}
               gap='1rem'>
-              <Avatar>
+              <Avatar sx={{ bgcolor: '#7F00FF' }}>
                 <PersonAddIcon />
               </Avatar>
               <Typography variant="h5" sx={{
@@ -322,18 +322,19 @@ export default function RegisterEmployee() {
                   )}
                 </FormControl>
                 <Button
-                  type="submit"
                   fullWidth
                   variant="contained"
-                  color="primary"
                   sx={{
-                    padding: { xs: '0.6rem', sm: '0.8rem' },
-                    marginTop: '0.5rem',
-                    fontSize: { xs: '1rem', sm: '1.1rem' },
-                    fontWeight: 'bold'
+                    backgroundColor: '#7F00FF',
+                    color: '#fff',
+                    padding: '10px',
+                    fontWeight: 'bold',
+                    '&:hover': {
+                      backgroundColor: '#5e00cc',
+                    },
                   }}
                 >
-                  {text}
+                  Submit
                 </Button>
               </Box>
             </form>
