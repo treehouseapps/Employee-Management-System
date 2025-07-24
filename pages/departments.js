@@ -1,16 +1,9 @@
 import React, { useState } from 'react';
+import { useFetchedData } from '../components/DataContext';
+
 import {
-    Box,
-    Typography,
-    Grid,
-    Paper,
-    Avatar,
-    Button,
-    Chip,
-    Divider,
-    IconButton,
-    Menu,
-    MenuItem,
+    Box, Typography, Grid, Paper, Avatar, Button,
+    Chip, Divider, IconButton, Menu, MenuItem,
 } from '@mui/material';
 import BusinessIcon from '@mui/icons-material/Business';
 import AddIcon from '@mui/icons-material/Add';
@@ -18,18 +11,28 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 import Navbar from '../components/navbar';
 import Link from 'next/link';
 
-const initialDepartments = [
-    { id: 1, name: 'Human Resources', employees: 14, status: 'Active' },
-    { id: 2, name: 'Engineering', employees: 30, status: 'Active' },
-    { id: 3, name: 'Sales', employees: 10, status: 'Inactive' },
-    { id: 4, name: 'Marketing', employees: 8, status: 'Active' },
-    { id: 5, name: 'IT Support', employees: 6, status: 'Inactive' },
-];
-
 const Departments = () => {
-    const [departments, setDepartments] = useState(initialDepartments);
+    const { fetchedData: employees = [], loading } = useFetchedData();
     const [anchorEl, setAnchorEl] = useState(null);
     const [selectedDeptId, setSelectedDeptId] = useState(null);
+
+    // Group employees by department
+    const departmentMap = {};
+    employees.forEach((emp) => {
+        const deptName = emp?.department || 'Unknown';
+        console.log(emp)
+        if (!departmentMap[deptName]) {
+            departmentMap[deptName] = {
+                id: Object.keys(departmentMap).length + 1,
+                name: deptName,
+                employees: 0,
+                status: 'Active',
+            };
+        }
+        departmentMap[deptName].employees += 1;
+    });
+
+    const departments = Object.values(departmentMap);
 
     const handleMenuOpen = (event, id) => {
         setAnchorEl(event.currentTarget);
@@ -42,13 +45,13 @@ const Departments = () => {
     };
 
     const handleStatusChange = (newStatus) => {
-        setDepartments((prev) =>
-            prev.map((dept) =>
-                dept.id === selectedDeptId ? { ...dept, status: newStatus } : dept
-            )
-        );
+        const index = departments.findIndex((dept) => dept.id === selectedDeptId);
+        if (index !== -1) {
+            departments[index].status = newStatus;
+        }
         handleMenuClose();
     };
+
     return (
         <Box>
             <Navbar />
@@ -86,26 +89,27 @@ const Departments = () => {
                             A central view of all existing departments and their status. This helps you organize your workforce better and keep track of department-specific staffing.
                         </Typography>
                     </Box>
-
-
                 </Box>
+
                 <Box sx={{ width: '100%' }}>
                     <Grid container spacing={2} alignItems="center" justifyContent="space-between">
                         {/* Add Department Button */}
                         <Grid item xs={12} md={3}>
-                            <Link href='/login'>  <Button
-                                fullWidth
-                                variant="contained"
-                                startIcon={<AddIcon />}
-                                sx={{
-                                    backgroundColor: '#7F00FF',
-                                    fontWeight: 500,
-                                    textTransform: 'none',
-                                    '&:hover': { backgroundColor: '#6900d1' },
-                                }}
-                            >
-                                Add Department
-                            </Button></Link>
+                            <Link href='/login'>
+                                <Button
+                                    fullWidth
+                                    variant="contained"
+                                    startIcon={<AddIcon />}
+                                    sx={{
+                                        backgroundColor: '#7F00FF',
+                                        fontWeight: 500,
+                                        textTransform: 'none',
+                                        '&:hover': { backgroundColor: '#6900d1' },
+                                    }}
+                                >
+                                    Add Department
+                                </Button>
+                            </Link>
                         </Grid>
 
                         {/* Summary Cards */}
@@ -159,7 +163,6 @@ const Departments = () => {
                     </Grid>
                 </Box>
 
-
                 {/* Department List */}
                 <Box>
                     <Typography
@@ -170,7 +173,7 @@ const Departments = () => {
                     </Typography>
 
                     <Grid container spacing={3}>
-                        {departments.map((dept, index) => (
+                        {departments.map((dept) => (
                             <Grid item xs={12} sm={6} md={3} key={dept.id}>
                                 <Paper
                                     elevation={1}
@@ -193,7 +196,6 @@ const Departments = () => {
                                         <Avatar sx={{ bgcolor: '#7F00FF', width: 32, height: 32, p: 1 }}>
                                             <BusinessIcon />
                                         </Avatar>
-                                        {/* 3-dot menu */}
                                         <IconButton
                                             onClick={(e) => handleMenuOpen(e, dept.id)}
                                             aria-controls={selectedDeptId === dept.id ? 'status-menu' : undefined}
@@ -220,9 +222,7 @@ const Departments = () => {
 
                                     <Chip
                                         label={dept.status}
-                                        color={
-                                            dept.status === 'Active' ? 'success' : 'default'
-                                        }
+                                        color={dept.status === 'Active' ? 'success' : 'default'}
                                         variant="outlined"
                                         sx={{ width: 'fit-content' }}
                                     />
@@ -232,6 +232,7 @@ const Departments = () => {
                     </Grid>
                 </Box>
             </Box>
+
             <Menu
                 id="status-menu"
                 anchorEl={anchorEl}
