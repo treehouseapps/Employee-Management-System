@@ -80,7 +80,7 @@ const TopEmployeesList = () => {
             </Box>
 
             {/* Data Rows */}
-            {employees.map(({ _id, name, department, employmentStatus }, index) => (
+            {employees.slice(0, 4).map(({ _id, name, department, employmentStatus }, index) => (
                 <Box
                     key={_id || index}
                     display="grid"

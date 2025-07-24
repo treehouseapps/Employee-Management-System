@@ -112,7 +112,7 @@ const Dashboard = () => {
                                     }}>
                                         Total Employees
                                     </Typography>
-                                    <Typography fontSize={17} fontWeight={'bold'}>23{dashboardData.totalEmployees}0.5</Typography>
+                                    <Typography fontSize={17} fontWeight={'bold'}>{dashboardData.totalEmployees}</Typography>
                                     <Typography fontSize={'13px'} mb={'1rem'} mt={'.2rem'}>Task</Typography>
                                     <Typography color='#0BDA51' fontSize={'13px'}>+35% This Month</Typography>
                                 </Box>
@@ -146,7 +146,7 @@ const Dashboard = () => {
                                     }}>
                                         Total Departments
                                     </Typography>
-                                    <Typography fontSize={17} fontWeight={'bold'}>1{dashboardData.totalDepartments}97</Typography>
+                                    <Typography fontSize={17} fontWeight={'bold'}>{dashboardData.totalDepartments}</Typography>
                                     <Typography fontSize={'13px'} mb={'1rem'} mt={'.2rem'}>Task</Typography>
                                     <Typography color='#0BDA51' fontSize={'13px'}>5% This Month</Typography>
                                 </Box>
