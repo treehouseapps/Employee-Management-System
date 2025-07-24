@@ -1,4 +1,4 @@
-import { Box, Typography, Divider, Backdrop, CircularProgress, Grid } from '@mui/material';
+import { Box, Typography, Backdrop, CircularProgress, Grid } from '@mui/material';
 import {
     Groups as GroupsIcon,
     Man,
@@ -9,35 +9,18 @@ import {
     MemoryOutlined,
     TrendingUpOutlined
 } from '@mui/icons-material';
-import { useState, useEffect } from 'react';
 import Navbar from '../components/navbar';
 import Piechart from '../components/piechart';
 import TopEmployeesList from '../components/TopEmployeeList';
+import { useFetchedData } from '../components/DataContext';
 
 const Dashboard = () => {
-    const [employees, setEmployees] = useState([]);
-    const [loading, setLoading] = useState(true);
-    useEffect(() => {
-        fetch('/api/service')
-            .then((response) => response.json())
-            .then(({ message, data }) => {
-                if (Array.isArray(data)) {
-                    setEmployees(data);
-                } else {
-                    console.error('Invalid data format:', data);
-                }
-            })
-            .catch((error) => console.error('Error fetching employees:', error))
-            .finally(() => setLoading(false));
-    }, []);
+    const { fetchedData: employees = [], loading } = useFetchedData();
 
     const dashboardData = {
         totalEmployees: employees?.length || 0,
         totalDepartments: new Set(employees?.map(emp => emp?.department) || []).size,
-        genderDistribution: {
-            male: employees?.filter(emp => emp?.gender === 'Male')?.length || 0,
-            female: employees?.filter(emp => emp?.gender === 'Female')?.length || 0
-        },
+
         departmentDistribution: {
             HR: employees?.filter(emp => emp?.department === 1)?.length || 0,
             Finance: employees?.filter(emp => emp?.department === 2)?.length || 0,
@@ -312,168 +295,6 @@ const Dashboard = () => {
                         <TopEmployeesList />
                     </Box>
                 </Box>
-
-                {/* <Box p={1}>
-                    <Typography mt={1} variant="h4" component="h1" sx={{
-                        fontWeight: 'bold',
-                        color: 'black',
-                        fontSize: { xs: '0.9rem', md: '1rem' },
-                    }}>
-                        Employment Status
-                    </Typography>
-                    <Box display='grid'
-                        gridTemplateColumns={{
-                            xs: '1fr',              // Single column on mobile
-                            sm: 'repeat(2, 1fr)',   // Two columns on tablet
-                            md: 'repeat(4, 1fr)'    // Four columns on desktop
-                        }}
-                        gap={2}>
-                        <Box
-                            display='flex'
-                            alignItems='center'
-                            justifyContent='center'
-                            margin={2}
-                            height='max-content'
-                            borderRadius={2}
-                            width='max-content'>
-                            <Box sx={{
-                                backgroundColor: 'skyblue',
-                                padding: '1rem',
-                                borderTopLeftRadius: '20%',
-                                borderBottomLeftRadius: '20%',
-                                height: '4rem',
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center'
-                            }}>
-                                <GroupsIcon
-                                    sx={{ color: 'white', fontSize: '2.2rem' }} />
-                            </Box>
-                            <Box p={2} backgroundColor='white' sx={{
-                                height: '4rem',
-                                display: 'flex',
-                                flexDirection: 'column',
-                                justifyContent: 'center'
-                            }}>
-                                <Typography variant="h6" component="h2" sx={{
-                                    fontWeight: 'bold',
-                                    fontSize: '1rem',
-                                }}>
-                                    Full Time
-                                </Typography>
-                                <Typography sx={{ fontSize: '1rem' }}>{dashboardData.employmentStatus.fulltime}</Typography>
-                            </Box>
-                        </Box>
-                        <Box
-                            display='flex'
-                            alignItems='center'
-                            justifyContent='center'
-                            margin={2}
-                            height='max-content'
-                            borderRadius={2}
-                            width='max-content'>
-                            <Box sx={{
-                                backgroundColor: 'skyblue',
-                                padding: '1rem',
-                                borderTopLeftRadius: '20%',
-                                borderBottomLeftRadius: '20%',
-                                height: '4rem',
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center'
-                            }}>
-                                <GroupsIcon
-                                    sx={{ color: 'white', fontSize: '2.2rem' }} />
-                            </Box>
-                            <Box p={2} backgroundColor='white' sx={{
-                                height: '4rem',
-                                display: 'flex',
-                                flexDirection: 'column',
-                                justifyContent: 'center'
-                            }}>
-                                <Typography variant="h6" component="h2" sx={{
-                                    fontWeight: 'bold',
-                                    fontSize: '1rem',
-                                }}>
-                                    Part Time
-                                </Typography>
-                                <Typography sx={{ fontSize: '1rem' }}>{dashboardData.employmentStatus.parttime}</Typography>
-                            </Box>
-                        </Box>
-                        <Box
-                            display='flex'
-                            alignItems='center'
-                            justifyContent='center'
-                            margin={2}
-                            height='max-content'
-                            borderRadius={2}
-                            width='max-content'>
-                            <Box sx={{
-                                backgroundColor: 'skyblue',
-                                padding: '1rem',
-                                borderTopLeftRadius: '20%',
-                                borderBottomLeftRadius: '20%',
-                                height: '4rem',
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center'
-                            }}>
-                                <GroupsIcon
-                                    sx={{ color: 'white', fontSize: '2.2rem' }} />
-                            </Box>
-                            <Box p={2} backgroundColor='white' sx={{
-                                height: '4rem',
-                                display: 'flex',
-                                flexDirection: 'column',
-                                justifyContent: 'center'
-                            }}>
-                                <Typography variant="h6" component="h2" sx={{
-                                    fontWeight: 'bold',
-                                    fontSize: '1rem',
-                                }}>
-                                    Internship
-                                </Typography>
-                                <Typography sx={{ fontSize: '1rem' }}>{dashboardData.employmentStatus.internship}</Typography>
-                            </Box>
-                        </Box>
-                        <Box
-                            display='flex'
-                            alignItems='center'
-                            justifyContent='center'
-                            margin={2}
-                            height='max-content'
-                            borderRadius={2}
-                            width='max-content'>
-                            <Box sx={{
-                                backgroundColor: 'skyblue',
-                                padding: '1rem',
-                                borderTopLeftRadius: '20%',
-                                borderBottomLeftRadius: '20%',
-                                height: '4rem',
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center'
-                            }}>
-                                <GroupsIcon
-                                    sx={{ color: 'white', fontSize: '2.2rem' }} />
-                            </Box>
-                            <Box p={2} backgroundColor='white' sx={{
-                                height: '4rem',
-                                display: 'flex',
-                                flexDirection: 'column',
-                                justifyContent: 'center'
-                            }}>
-                                <Typography variant="h6" component="h2" sx={{
-                                    fontWeight: 'bold',
-                                    fontSize: '1rem',
-                                }}>
-                                    Contract
-                                </Typography>
-                                <Typography sx={{ fontSize: '1rem' }}>{dashboardData.employmentStatus.contract}</Typography>
-                            </Box>
-                        </Box>
-                    </Box>
-                </Box> */}
 
             </Box>
         </Box >

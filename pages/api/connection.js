@@ -17,8 +17,6 @@ async function connectToDatabase() {
 
     try {
         const client = await MongoClient.connect(uri, {
-            useNewUrlParser: true,
-            useUnifiedTopology: true,
             serverSelectionTimeoutMS: 5000, // 5 second timeout
             maxPoolSize: 10, // Limit number of connections
         });

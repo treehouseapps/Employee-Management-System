@@ -3,9 +3,10 @@ import {
     Modal, TextField, CircularProgress, FormControl, InputLabel, Select,
     MenuItem, FormHelperText, InputAdornment,
 } from '@mui/material';
+import { useFetchedData } from '../components/DataContext';
 import SearchIcon from '@mui/icons-material/Search';
 import EditIcon from '@mui/icons-material/Edit';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Email as EmailIcon, LocalPhone, InboxOutlined, Fingerprint, Wc, CalendarToday, BusinessCenter, WorkHistory } from '@mui/icons-material';
 import Navbar from '../components/navbar';
 import { useMessage } from '../components/MessageContext';
@@ -19,30 +20,16 @@ const EMPLOYMENT_DEPARTEMENT = {
 };
 
 export default function DisplayEmployee() {
-    const [employees, setEmployees] = useState([]);
+    const { fetchedData: employees = [], loading } = useFetchedData();
     const [tempEmpData, setTempEmpData] = useState(null);
-    const [loading, setLoading] = useState(true);
     const { showMessage } = useMessage();
     const [deleteConfirmation, setDeleteConfirmation] = useState({
         open: false,
         employeeId: null,
         employeeName: ''
     });
-    const [editErrors, setEditErrors] = useState({});
 
-    useEffect(() => {
-        fetch('/api/service')
-            .then((response) => response.json())
-            .then(({ message, data }) => {
-                if (Array.isArray(data)) {
-                    setEmployees(data);
-                } else {
-                    console.error('Invalid data format:', data);
-                }
-            })
-            .catch((error) => console.error('Error fetching employees:', error))
-            .finally(() => setLoading(false));
-    }, []);
+    const [editErrors, setEditErrors] = useState({});
 
     const handleEditClick = (employee) => {
         setTempEmpData(employee);
@@ -259,7 +246,7 @@ export default function DisplayEmployee() {
                     <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flex: 1 }}>
                         <CircularProgress />
                     </Box>
-                ) : employees.length === 0 ? (
+                ) : !employees || employees.length === 0 ? (
                     <Box sx={{
                         display: 'flex',
                         flexDirection: 'column',

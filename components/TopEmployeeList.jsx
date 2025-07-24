@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
 import { Box, Typography, Avatar, CircularProgress } from '@mui/material';
+import { useFetchedData } from '../components/DataContext';
 
 const EMPLOYMENT_DEPARTEMENT = {
     1: 'Human Resources (HR)',
@@ -10,26 +10,7 @@ const EMPLOYMENT_DEPARTEMENT = {
 };
 
 const TopEmployeesList = () => {
-    const [employees, setEmployees] = useState([]);
-    const [loading, setLoading] = useState(true);
-
-    useEffect(() => {
-        fetch('/api/service')
-            .then(res => res.json())
-            .then(({ data }) => {
-                if (Array.isArray(data)) {
-                    setEmployees(data.slice(0, 3)); // top 3
-                } else {
-                    setEmployees([]);
-                    console.error('Invalid data format:', data);
-                }
-            })
-            .catch(err => {
-                console.error('Error fetching employees:', err);
-                setEmployees([]);
-            })
-            .finally(() => setLoading(false));
-    }, []);
+    const { fetchedData: employees = [], loading } = useFetchedData();
 
     if (loading) {
         return (
