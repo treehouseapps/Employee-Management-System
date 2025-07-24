@@ -1,35 +1,44 @@
 import React, { useState } from 'react';
 import { useFetchedData } from '../components/DataContext';
-
+import PeopleIcon from '@mui/icons-material/People';
 import {
     Box, Typography, Grid, Paper, Avatar, Button,
     Chip, Divider, IconButton, Menu, MenuItem,
 } from '@mui/material';
-import BusinessIcon from '@mui/icons-material/Business';
 import AddIcon from '@mui/icons-material/Add';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import Navbar from '../components/navbar';
 import Link from 'next/link';
+
+// Mapping numeric department IDs to readable names
+const departmentNames = {
+    1: 'HR',
+    2: 'Finance',
+    3: 'Marketing',
+    4: 'Operations',
+    5: 'IT',
+};
 
 const Departments = () => {
     const { fetchedData: employees = [], loading } = useFetchedData();
     const [anchorEl, setAnchorEl] = useState(null);
     const [selectedDeptId, setSelectedDeptId] = useState(null);
 
-    // Group employees by department
+    // Group employees by department (use readable names)
     const departmentMap = {};
     employees.forEach((emp) => {
-        const deptName = emp?.department || 'Unknown';
-        console.log(emp)
-        if (!departmentMap[deptName]) {
-            departmentMap[deptName] = {
-                id: Object.keys(departmentMap).length + 1,
+        const deptId = emp?.department;
+        const deptName = departmentNames[deptId] || 'Unknown';
+
+        if (!departmentMap[deptId]) {
+            departmentMap[deptId] = {
+                id: deptId,
                 name: deptName,
                 employees: 0,
                 status: 'Active',
             };
         }
-        departmentMap[deptName].employees += 1;
+        departmentMap[deptId].employees += 1;
     });
 
     const departments = Object.values(departmentMap);
@@ -194,7 +203,7 @@ const Departments = () => {
                                         }}
                                     >
                                         <Avatar sx={{ bgcolor: '#7F00FF', width: 32, height: 32, p: 1 }}>
-                                            <BusinessIcon />
+                                            <PeopleIcon />
                                         </Avatar>
                                         <IconButton
                                             onClick={(e) => handleMenuOpen(e, dept.id)}
