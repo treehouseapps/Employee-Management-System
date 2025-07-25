@@ -153,7 +153,7 @@ export default function RegisterEmployee() {
           <div>
             <Box display='grid'
               gridTemplateColumns='1fr 3fr'
-              placeItems='center'
+              // placeItems='center'
               alignItems='center'
               marginBottom={2}
               gap='1rem'>
@@ -324,6 +324,7 @@ export default function RegisterEmployee() {
                 <Button
                   fullWidth
                   variant="contained"
+                  type='submit'
                   sx={{
                     backgroundColor: '#7F00FF',
                     color: '#fff',

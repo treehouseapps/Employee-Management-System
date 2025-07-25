@@ -7,12 +7,15 @@ if (!process.env.DBCONNECTION) {
 }
 
 const uri = process.env.DBCONNECTION;
-let cachedClient = null;
-let cachedDb = null;
+let cached = global._mongo;
+
+if (!cached) {
+    cached = global._mongo = { client: null, db: null };
+}
 
 async function connectToDatabase() {
-    if (cachedClient && cachedDb) {
-        return { client: cachedClient, db: cachedDb };
+    if (cached.client && cached.db) {
+        return { client: cached.client, db: cached.db };
     }
 
     try {
@@ -23,17 +26,8 @@ async function connectToDatabase() {
 
         const db = client.db('EmployeeList');
 
-        client.on('connected', () => {
-            console.log('Successfully connected to MongoDB.');
-        });
-
-        client.on('error', (error) => {
-            console.error('MongoDB connection error:', error);
-        });
-
-        // Cache the client and database instances
-        cachedClient = client;
-        cachedDb = db;
+        cached.client = client;
+        cached.db = db;
 
         return { client, db };
     } catch (error) {

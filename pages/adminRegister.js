@@ -6,32 +6,31 @@ import Navbar from '../components/navbar';
 import Link from 'next/link';
 import { useMessage } from '../components/MessageContext';
 
-export default function Login() {
+export default function AdminSignup() {
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+    const { showMessage } = useMessage();
     const router = useRouter();
 
-    const [username, setUsername] = useState('')
-    const [password, setPassword] = useState('')
-    const { showMessage } = useMessage();
 
     const onSubmit = () => {
-        fetch('api/auth/login', {
+        fetch('/api/auth/register', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
             },
-            body: JSON.stringify({
-                username, password
-            })
+            body: JSON.stringify({ username, password }),
         })
-            .then(result => result.json())
+            .then(res => res.json())
             .then(data => {
                 showMessage(data.message)
                 router.push('/');
             })
-            .catch(error => {
-                console.error('Error:', error);
+            .catch(err => {
+                console.error('Signup error:', err);
             });
-    }
+    };
+
     return (
         <Box sx={{ minHeight: '100vh', backgroundColor: '#f4f4f4' }}>
             <Navbar />
@@ -40,7 +39,7 @@ export default function Login() {
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    minHeight: 'calc(100vh - 64px)', // Adjust for navbar height
+                    minHeight: 'calc(100vh - 64px)',
                     px: 2,
                 }}
             >
@@ -57,10 +56,10 @@ export default function Login() {
                     <Box textAlign="center" mb={3}>
                         <LockOutlined sx={{ fontSize: 40, color: '#7F00FF' }} />
                         <Typography variant="h5" fontWeight="bold" mt={1}>
-                            Admin Login
+                            Admin Signup
                         </Typography>
                         <Typography variant="body2" color="text.secondary">
-                            Enter your credentials to log in as Admin.
+                            Create an admin account to manage the system.
                         </Typography>
                     </Box>
 
@@ -112,7 +111,7 @@ export default function Login() {
                                 fontWeight: 'bold',
                             }}
                         >
-                            Login
+                            Sign Up
                         </Button>
                     </form>
 
@@ -122,7 +121,7 @@ export default function Login() {
                         mt={3}
                         textAlign="center"
                     >
-                        Forgot your password? <Link href='https://t.me/B_smile' >Contact the system administrator.</Link>
+                        Already have an account? <Link href="/admin/login">Login here</Link>
                     </Typography>
                 </Paper>
             </Box>
