@@ -1,7 +1,12 @@
 import { Box, Typography } from '@mui/material';
 import SentimentSatisfiedIcon from '@mui/icons-material/SentimentSatisfied';
 import { Air } from '@mui/icons-material';
+import { useEffect } from 'react';
 const Logout = () => {
+
+    useEffect(() => {
+        localStorage.removeItem('token')
+    }, [])
     return (
         <Box sx={{
             display: 'flex',

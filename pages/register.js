@@ -120,7 +120,10 @@ export default function RegisterEmployee() {
       const result = await response.json();
       if (response.ok) {
         showMessage(result.message, 'success');
-        clearForm();  // Clear form after successful submission
+        clearForm();
+        if (result.message === 'user successfully created!') {
+          router.push('/');
+        }
         setText('Register');
       } else {
         showMessage(result.message);

@@ -26,7 +26,10 @@ export default function Login() {
             .then(result => result.json())
             .then(data => {
                 showMessage(data.message)
-                router.push('/');
+                if (data.message === 'Login successful') {
+                    localStorage.setItem('token', data.token);
+                    router.push('/');
+                }
             })
             .catch(error => {
                 console.error('Error:', error);
