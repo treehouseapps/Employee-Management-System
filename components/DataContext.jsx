@@ -7,27 +7,30 @@ export function FetchedDataProvider({ children }) {
     const [fetchedData, setFetchedData] = useState([]);
     const [loading, setLoading] = useState(true);
     const router = useRouter();
+    const [checked, setChecked] = useState(false);
 
     useEffect(() => {
         const token = localStorage.getItem('token');
 
         if (!token) {
-            router.replace('/login');
-            return;
+            // this prevent/avoids multiple renders and re-navigation/infinite re-rendering
+            if (router.pathname !== '/login') {
+                router.replace('/login');
+            }
+        } else {
+            fetch('/api/service')
+                .then(res => res.json())
+                .then(json => {
+                    setFetchedData(json.data || []);
+                })
+                .catch(err => {
+                    console.error("Failed to fetch data", err);
+                    setFetchedData([]);
+                })
+                .finally(() => setLoading(false));
         }
-
-        fetch('/api/service')
-            .then(res => res.json())
-            .then(json => {
-                setFetchedData(json.data || []);
-                setLoading(false);
-            })
-            .catch(err => {
-                console.error("Failed to fetch data", err);
-                setFetchedData([]);
-                setLoading(false);
-            });
     }, [router]);
+
 
     return (
         <FetchedDataContext.Provider value={{ fetchedData, setFetchedData, loading }}>
