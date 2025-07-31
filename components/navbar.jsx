@@ -1,9 +1,11 @@
-import React from 'react';
-import { AppBar, Toolbar, Typography, Button, Box } from '@mui/material';
-import { Home, Logout } from '@mui/icons-material';
+import React, { useState, useRef } from 'react';
+import { AppBar, Toolbar, Paper, Popper, Typography, Button, Box } from '@mui/material';
+import { Home, Logout, Person } from '@mui/icons-material';
 import Link from 'next/link';
 
 function Navbar() {
+    const [profile, setProfile] = useState(false)
+    const anchorRef = useRef(null);
     return (
         <Box sx={{ margin: '0 auto', width: '100%' }}>
             <AppBar
@@ -39,6 +41,8 @@ function Navbar() {
                         sx={{
                             display: 'flex',
                             gap: { xs: '0.5rem', sm: '1rem' },
+                            alignItems: 'center',
+                            mr: '2rem'
                         }}
                     >
                         <Link href="/" passHref>
@@ -54,36 +58,57 @@ function Navbar() {
                                 Home
                             </Button>
                         </Link>
-                        <Link href="/profile" passHref>
-                            <Button
-                                color="inherit"
-                                startIcon={<Logout />}
-                                sx={{
-                                    color: 'black',
-                                    fontFamily: 'Quicksand',
-                                    fontSize: { xs: '0.8rem', sm: '1rem' },
-                                }}
-                            >
-                                Logout
-                            </Button>
-                        </Link>
-                        <Link href="/logout" passHref>
-                            <Button
-                                color="inherit"
-                                startIcon={<Logout />}
-                                sx={{
-                                    color: 'black',
-                                    fontFamily: 'Quicksand',
-                                    fontSize: { xs: '0.8rem', sm: '1rem' },
-                                }}
-                            >
-                                Logout
-                            </Button>
-                        </Link>
+                        <Box
+                            ref={anchorRef}
+                            display="flex"
+                            alignItems="center"
+                            p="0.5rem" gap={0.5}
+                            sx={{
+                                cursor: 'pointer', fontFamily: 'Quicksand',
+                                '&:hover': {
+                                    backgroundColor: 'lightgray',
+                                },
+                            }}
+                            onMouseEnter={() => setProfile(true)}
+                            onMouseLeave={() => setProfile(false)}
+                        >
+                            <Person /> Admin
+                        </Box>
+
+                        <Popper
+                            open={profile}
+                            anchorEl={anchorRef.current}
+                            placement="bottom-end"
+                            onMouseEnter={() => setProfile(true)}
+                            onMouseLeave={() => setProfile(false)}
+                            style={{ zIndex: 1300 }}
+                        >
+                            <Paper elevation={3} sx={{ p: 2, minWidth: 200 }}>
+                                <Typography variant="subtitle1" gutterBottom>
+                                    John Doe
+                                </Typography>
+                                <Typography variant="body2">Email: admin@example.com</Typography>
+                                <Link href="/logout" passHref>
+                                    <Button
+                                        color="inherit"
+                                        startIcon={<Logout />}
+                                        sx={{
+                                            color: 'black',
+                                            fontFamily: 'Quicksand',
+                                            fontSize: { xs: '0.8rem', sm: '1rem' },
+                                        }}
+                                    >
+                                        Logout
+                                    </Button>
+                                </Link>
+                            </Paper>
+                        </Popper>
+
                     </Box>
-                </Toolbar>
-            </AppBar>
-        </Box>
+                </Toolbar >
+            </AppBar >
+
+        </Box >
     );
 }
 
