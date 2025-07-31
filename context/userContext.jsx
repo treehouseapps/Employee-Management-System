@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-
+import jwt_decode from 'jwt-decode';
 const UserContext = createContext()
 
 export function UserProvider({ children }) {
@@ -7,12 +7,14 @@ export function UserProvider({ children }) {
     useEffect(() => {
         const token = localStorage.getItem('token')
         if (token) {
-            setUser('User exist')
+            const decoded = jwt_decode(token);
+            console.log(decoded)
+            setUser(`User exist`)
         }
         else {
             setUser('!User exist')
         }
-    }, [user])
+    }, [])
 
     return (
         <UserContext.Provider value={{ user, setUser }}>
