@@ -54,6 +54,19 @@ function Navbar() {
                                 Home
                             </Button>
                         </Link>
+                        <Link href="/profile" passHref>
+                            <Button
+                                color="inherit"
+                                startIcon={<Logout />}
+                                sx={{
+                                    color: 'black',
+                                    fontFamily: 'Quicksand',
+                                    fontSize: { xs: '0.8rem', sm: '1rem' },
+                                }}
+                            >
+                                Logout
+                            </Button>
+                        </Link>
                         <Link href="/logout" passHref>
                             <Button
                                 color="inherit"
