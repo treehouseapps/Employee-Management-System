@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { AppBar, Toolbar, Paper, Popper, Typography, Button, Box } from '@mui/material';
-import { Home, Logout, Person } from '@mui/icons-material';
+import { ArrowDropDown, Home, Logout, Person } from '@mui/icons-material';
 import Link from 'next/link';
 import { useUserData } from '../context/userContext'
 
@@ -74,7 +74,7 @@ function Navbar() {
                             onMouseEnter={() => setProfile(true)}
                             onMouseLeave={() => setProfile(false)}
                         >
-                            <Person /> Admin
+                            <Person /><> Admin<ArrowDropDown /></>
                         </Box>
 
                         <Popper
@@ -85,11 +85,14 @@ function Navbar() {
                             onMouseLeave={() => setProfile(false)}
                             style={{ zIndex: 1300 }}
                         >
-                            <Paper elevation={3} sx={{ p: 2, minWidth: 200 }}>
-                                <Typography variant="subtitle1" gutterBottom>
+                            <Paper elevation={3} sx={{ p: '2px 0px', minWidth: 150, display: 'grid', placeItems: 'center' }} >
+                                <Typography variant="subtitle1"
+                                    fontFamily={'Quicksand'}
+                                    fontWeight={900}
+                                    fontSize={20}
+                                    padding={0} margin={0} gutterBottom>
                                     {user}
                                 </Typography>
-                                <Typography variant="body2">Email: admin@example.com</Typography>
                                 <Link href="/logout" passHref>
                                     <Button
                                         color="inherit"
@@ -97,7 +100,7 @@ function Navbar() {
                                         sx={{
                                             color: 'black',
                                             fontFamily: 'Quicksand',
-                                            fontSize: { xs: '0.8rem', sm: '1rem' },
+                                            fontSize: { xs: '0.5rem', sm: '13px' },
                                         }}
                                     >
                                         Logout

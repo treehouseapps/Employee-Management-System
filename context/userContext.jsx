@@ -1,27 +1,40 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import jwt_decode from 'jwt-decode';
-const UserContext = createContext()
+
+const UserContext = createContext();
 
 export function UserProvider({ children }) {
-    const [user, setUser] = useState('')
+    const [user, setUser] = useState(null);
+
     useEffect(() => {
-        const token = localStorage.getItem('token')
-        if (token) {
-            const decoded = jwt_decode(token);
-            console.log(decoded)
-            setUser(`User exist`)
-        }
-        else {
-            setUser('!User exist')
-        }
-    }, [])
+        const loadAndDecode = async () => {
+            const token = localStorage.getItem('token');
+            if (token) {
+                try {
+                    const jwtDecodeModule = await import('jwt-decode');
+
+                    // Use the jwtDecode function from the module
+                    const decoded = jwtDecodeModule.jwtDecode(token);
+
+                    setUser(decoded.username);
+                } catch (err) {
+                    console.error('Invalid token or import error:', err);
+                    setUser(null);
+                }
+            } else {
+                setUser(null);
+            }
+        };
+
+        loadAndDecode();
+    }, []);
 
     return (
         <UserContext.Provider value={{ user, setUser }}>
             {children}
         </UserContext.Provider>
-    )
+    );
 }
+
 export function useUserData() {
     return useContext(UserContext);
 }

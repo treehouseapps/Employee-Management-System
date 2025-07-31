@@ -4,7 +4,7 @@ import { Box, TextField, Button, Typography, Paper, InputAdornment } from '@mui/
 import { LockOutlined, PersonOutline } from '@mui/icons-material';
 import Navbar from '../components/navbar';
 import Link from 'next/link';
-import { useMessage } from '../components/MessageContext';
+import { useMessage } from '../context/MessageContext';
 
 export default function AdminSignup() {
     const [username, setUsername] = useState('');
