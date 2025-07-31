@@ -6,7 +6,7 @@ import { useUserData } from '../context/userContext'
 
 function Navbar() {
     const { user, setUser } = useUserData()
-    const [profile, setProfile] = useState(true)
+    const [profile, setProfile] = useState(false)
     const anchorRef = useRef(null);
     return (
         <Box sx={{ margin: '0 auto', width: '100%' }}>
