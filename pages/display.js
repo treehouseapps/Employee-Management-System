@@ -20,7 +20,7 @@ const EMPLOYMENT_DEPARTEMENT = {
 };
 
 export default function DisplayEmployee() {
-    const { fetchedData: employees = [], loading } = useFetchedData();
+    const { fetchedData: employees = [], setFetchedData, loading } = useFetchedData();
     const [tempEmpData, setTempEmpData] = useState(null);
     const { showMessage } = useMessage();
     const [deleteConfirmation, setDeleteConfirmation] = useState({
@@ -160,7 +160,7 @@ export default function DisplayEmployee() {
             } else {
                 showMessage("Data Deleted Successfully", 'success')
             }
-            setEmployees((prevEmployees) =>
+            setFetchedData((prevEmployees) =>
                 prevEmployees.filter((emp) => emp._id !== deleteConfirmation.employeeId)
             );
             handleCloseDeleteModal();
