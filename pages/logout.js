@@ -1,12 +1,15 @@
 import { useEffect } from 'react';
+import { useRouter } from 'next/router';
 
 const Logout = () => {
+    const router = useRouter();
 
     useEffect(() => {
         localStorage.removeItem('token');
-    }, []);
+        router.replace('/login');
+    }, [router]);
 
-    return null; // no UI needed
+    return null;
 };
 
 export default Logout;

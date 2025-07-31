@@ -15,7 +15,7 @@ import {
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import Loading from '../components/loading';
 import Navbar from '../components/navbar';
-import { useMessage } from '../components/MessageContext';
+import { useMessage } from '../context/MessageContext';
 
 export default function RegisterEmployee() {
   const [name, setName] = useState('');

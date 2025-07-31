@@ -2,9 +2,11 @@ import '../styles/globals.css'
 import { Box } from '@mui/material';
 import Sidebar from '../components/sidebar'
 import Footer from '../components/Footer'
-import { MessageProvider } from '../components/MessageContext';
 import Head from 'next/head'
-import { FetchedDataProvider } from '../components/DataContext';
+
+import { UserProvider } from '../context/userContext';
+import { MessageProvider } from '../context/MessageContext';
+import { FetchedDataProvider } from '../context/DataContext';
 
 function MyApp({ Component, pageProps }) {
   return (
@@ -14,15 +16,17 @@ function MyApp({ Component, pageProps }) {
         <title>Employee Management System</title>
       </Head>
       <div style={{ position: 'relative', minHeight: '100vh', paddingBottom: '80px', backgroundColor: 'white' }}>
-        <MessageProvider>
-          <FetchedDataProvider>
-            <Box display={'grid'} gridTemplateColumns={'1fr 5fr'}>
-              <Sidebar />
-              <Component {...pageProps} />
-            </Box>
-            <Footer />
-          </FetchedDataProvider>
-        </MessageProvider>
+        <UserProvider>
+          <MessageProvider>
+            <FetchedDataProvider>
+              <Box display={'grid'} gridTemplateColumns={'1fr 5fr'}>
+                <Sidebar />
+                <Component {...pageProps} />
+              </Box>
+              <Footer />
+            </FetchedDataProvider>
+          </MessageProvider>
+        </UserProvider>
       </div>
     </>
   )

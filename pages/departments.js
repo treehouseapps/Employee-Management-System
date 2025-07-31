@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useFetchedData } from '../components/DataContext';
+import { useFetchedData } from '../context/DataContext';
 import PeopleIcon from '@mui/icons-material/People';
 import {
     Box, Typography, Grid, Paper, Avatar, Button,

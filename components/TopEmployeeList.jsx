@@ -1,5 +1,5 @@
 import { Box, Typography, Avatar, CircularProgress } from '@mui/material';
-import { useFetchedData } from '../components/DataContext';
+import { useFetchedData } from '../context/DataContext';
 
 const EMPLOYMENT_DEPARTEMENT = {
     1: 'Human Resources (HR)',

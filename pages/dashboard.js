@@ -12,7 +12,7 @@ import {
 import Navbar from '../components/navbar';
 import Piechart from '../components/piechart';
 import TopEmployeesList from '../components/TopEmployeeList';
-import { useFetchedData } from '../components/DataContext';
+import { useFetchedData } from '../context/DataContext';
 
 const Dashboard = () => {
     const { fetchedData: employees = [], loading } = useFetchedData();

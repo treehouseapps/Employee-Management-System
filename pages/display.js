@@ -3,13 +3,13 @@ import {
     Modal, TextField, CircularProgress, FormControl, InputLabel, Select,
     MenuItem, FormHelperText, InputAdornment,
 } from '@mui/material';
-import { useFetchedData } from '../components/DataContext';
+import { useFetchedData } from '../context/DataContext';
 import SearchIcon from '@mui/icons-material/Search';
 import EditIcon from '@mui/icons-material/Edit';
 import { useState } from 'react';
 import { Email as EmailIcon, LocalPhone, InboxOutlined, Fingerprint, Wc, CalendarToday, BusinessCenter, WorkHistory } from '@mui/icons-material';
 import Navbar from '../components/navbar';
-import { useMessage } from '../components/MessageContext';
+import { useMessage } from '../context/MessageContext';
 
 const EMPLOYMENT_DEPARTEMENT = {
     1: 'Human Resources (HR)',

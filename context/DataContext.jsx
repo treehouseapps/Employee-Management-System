@@ -7,7 +7,6 @@ export function FetchedDataProvider({ children }) {
     const [fetchedData, setFetchedData] = useState([]);
     const [loading, setLoading] = useState(true);
     const router = useRouter();
-    const [checked, setChecked] = useState(false);
 
     useEffect(() => {
         const token = localStorage.getItem('token');

@@ -2,9 +2,11 @@ import React, { useState, useRef } from 'react';
 import { AppBar, Toolbar, Paper, Popper, Typography, Button, Box } from '@mui/material';
 import { Home, Logout, Person } from '@mui/icons-material';
 import Link from 'next/link';
+import { useUserData } from '../context/userContext'
 
 function Navbar() {
-    const [profile, setProfile] = useState(false)
+    const { user, setUser } = useUserData()
+    const [profile, setProfile] = useState(true)
     const anchorRef = useRef(null);
     return (
         <Box sx={{ margin: '0 auto', width: '100%' }}>
@@ -85,7 +87,7 @@ function Navbar() {
                         >
                             <Paper elevation={3} sx={{ p: 2, minWidth: 200 }}>
                                 <Typography variant="subtitle1" gutterBottom>
-                                    John Doe
+                                    {user}
                                 </Typography>
                                 <Typography variant="body2">Email: admin@example.com</Typography>
                                 <Link href="/logout" passHref>
