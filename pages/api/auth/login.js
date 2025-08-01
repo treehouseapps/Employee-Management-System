@@ -1,8 +1,6 @@
 import { ObjectId } from 'mongodb';
 import connectToDatabase from '../connection';
-import jwt from 'jsonwebtoken';
-
-const JWT_SECRET = process.env.JWT_SECRET;
+import { signToken } from '../../../utils/jwt';
 
 export default async function handler(req, res) {
     if (req.method !== 'POST') {
@@ -28,7 +26,7 @@ export default async function handler(req, res) {
             username: user.username,
         };
 
-        const token = jwt.sign(payload, JWT_SECRET, { expiresIn: '7d' });
+        const token = signToken(payload);
 
         res.status(200).json({
             message: 'Login successful',
