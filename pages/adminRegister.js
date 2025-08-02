@@ -121,7 +121,7 @@ export default function AdminSignup() {
                         mt={3}
                         textAlign="center"
                     >
-                        Already have an account? <Link href="/admin/login">Login here</Link>
+                        Already have an account? <Link href="/login">Login here</Link>
                     </Typography>
                 </Paper>
             </Box>
