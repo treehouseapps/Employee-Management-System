@@ -43,7 +43,7 @@ export default function Login() {
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    minHeight: 'calc(100vh - 64px)', // Adjust for navbar height
+                    minHeight: 'calc(100vh - 64px)',
                     px: 2,
                 }}
             >
