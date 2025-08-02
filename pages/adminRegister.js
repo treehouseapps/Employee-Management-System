@@ -55,7 +55,7 @@ export default function AdminSignup() {
                 >
                     <Box textAlign="center" mb={3}>
                         <LockOutlined sx={{ fontSize: 40, color: '#7F00FF' }} />
-                        <Typography variant="h5" fontWeight="bold" mt={1}>
+                        <Typography variant="h5" fontWeight="bold" mt={1} fontFamily={'Quicksand'}>
                             Admin Signup
                         </Typography>
                         <Typography variant="body2" color="text.secondary">
