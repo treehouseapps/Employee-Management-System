@@ -10,7 +10,7 @@ import {
     Apartment as DepartmentsIcon,
     Settings as SettingsIcon,
     PersonAddAlt as RegisterIcon,
-    MoreHoriz as OtherIcon, Search
+    ArrowRight, Search,
 } from '@mui/icons-material';
 
 const Sidebar = () => {
@@ -87,7 +87,7 @@ const Sidebar = () => {
                         p: 1,
                     }}
                 >
-                    <Typography sx={{ fontSize: '15px', margin: '.2rem' }}>Application</Typography>
+                    <Typography sx={{ fontSize: '15px', margin: '.2rem', display: 'flex', alignItems: 'center' }}><ArrowRight />Application</Typography>
 
                     <Box display="flex" mb={1} gap={1} alignItems="center" fontWeight={'light'}>
                         <DashboardIcon fontSize="small" /> <Link href="/dashboard" passHref>Dashboard</Link>
@@ -105,7 +105,7 @@ const Sidebar = () => {
                         <DepartmentsIcon fontSize="small" /> <Link href="/departments" passHref>Departments</Link>
                     </Box>
 
-                    <Typography sx={{ fontSize: '15px', margin: '.2rem' }}>Other</Typography>
+                    <Typography sx={{ fontSize: '15px', margin: '.2rem', display: 'flex', alignItems: 'center' }}><ArrowRight />Other</Typography>
 
                     <Box display="flex" mb={1} gap={1} alignItems="center" fontWeight={'light'}>
                         <SettingsIcon fontSize="small" /> <Link href="/adminRegister" passHref>Admin Register</Link>
