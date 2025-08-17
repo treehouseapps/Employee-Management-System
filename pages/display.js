@@ -273,6 +273,7 @@ export default function DisplayEmployee() {
                             userSelect: 'none',
                         }}
                     >
+                        {/* Header Row */}
                         <Grid
                             container
                             sx={{
@@ -286,13 +287,14 @@ export default function DisplayEmployee() {
                             }}
                         >
                             <Grid item xs={1}>No</Grid>
-                            <Grid item xs={2} sx={{ textAlign: 'left' }}>Name & Position</Grid>
-                            <Grid item xs={1}>Email</Grid>
-                            <Grid item xs={4}>Department</Grid>
-                            <Grid item xs={1.5}>Status</Grid>
+                            <Grid item xs sx={{ textAlign: 'left' }}>Name & Position</Grid>
+                            <Grid item xs={3}>Email</Grid>
+                            <Grid item xs sx={{ textAlign: 'left' }}>Department</Grid>
+                            <Grid item xs={2}>Status</Grid>
                             <Grid item xs={2} />
                         </Grid>
 
+                        {/* Data Rows */}
                         {employees.map((employee, index) => (
                             <Grid
                                 container
@@ -302,38 +304,52 @@ export default function DisplayEmployee() {
                                     alignItems: 'center',
                                     paddingY: 1,
                                     paddingX: 1,
-                                    position: 'relative',
                                     fontSize: { xs: '0.75rem', sm: '0.875rem' },
                                     color: '#333',
                                     '&:hover': { bgcolor: '#eae6ff' },
                                 }}
                             >
-                                <Grid item xs={1} textAlign="center" fontWeight={600}>{index + 1}</Grid>
-                                <Grid item xs={2} sx={{ display: 'flex', alignItems: 'center', gap: 1, textAlign: 'left' }}>
-                                    <Box>
-                                        <Typography fontWeight={600}>{employee.name}</Typography>
-                                        <Typography variant="caption" color="text.secondary">{employee.position}</Typography>
-                                    </Box>
+                                <Grid item xs={1} textAlign="center" fontWeight={600}>
+                                    {index + 1}
                                 </Grid>
-                                <Grid item xs={2.5} sx={{ display: 'flex', flexDirection: 'column', gap: 0.3 }}>
-                                    <Typography sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
-                                        <EmailIcon fontSize="small" /> {employee.email}
+
+                                <Grid item xs sx={{ display: 'flex', flexDirection: 'column', gap: 0.2 }}>
+                                    <Typography
+                                        fontWeight={600}
+                                        sx={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}
+                                    >
+                                        {employee.name}
+                                    </Typography>
+                                    <Typography
+                                        variant="caption"
+                                        color="text.secondary"
+                                        sx={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}
+                                    >
+                                        {employee.position}
                                     </Typography>
                                 </Grid>
-                                <Grid item xs={3} sx={{ display: 'flex', alignItems: 'center', gap: 0.5, textTransform: 'capitalize' }}>
+
+                                <Grid item xs={3} sx={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', display: 'flex', alignItems: 'center', gap: 0.5 }}>
+                                    <EmailIcon fontSize="small" /> {employee.email}
+                                </Grid>
+
+                                <Grid item xs sx={{ display: 'flex', alignItems: 'center', gap: 0.5, textTransform: 'capitalize', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                                     <BusinessCenter fontSize="small" /> {getEmploymentDepartementText(employee.department)}
                                 </Grid>
-                                <Grid item xs={1.5} sx={{ fontWeight: 600, color: employee.employmentStatus === 'Full Time' ? '#388e3c' : '#f57c00', display: 'flex', alignItems: 'center', gap: 0.5, textTransform: 'capitalize' }}>
+
+                                <Grid item xs={2} sx={{ display: 'flex', alignItems: 'center', gap: 0.5, fontWeight: 600, color: employee.employmentStatus === 'Full Time' ? '#388e3c' : '#f57c00', textTransform: 'capitalize' }}>
                                     <WorkHistory fontSize="small" /> {employee.employmentStatus || 'N/A'}
                                 </Grid>
+
                                 <Grid item xs={2} sx={{ display: 'flex', justifyContent: 'flex-end', gap: 1 }}>
-                                    {employee.empStatus === 'edited' && <EditIcon color="primary" sx={{ fontSize: 20, alignSelf: 'center', mr: 1 }} titleAccess="Edited" />}
-                                    <Button variant="outlined" color="success" size="small" sx={{ fontWeight: 'bold', textTransform: 'none' }}>Edit</Button>
-                                    <Button variant="outlined" color="error" size="small" sx={{ fontWeight: 'bold', textTransform: 'none' }}>Delete</Button>
+                                    {employee.empStatus === 'edited' && <EditIcon color="primary" sx={{ fontSize: 20, alignSelf: 'center', mr: 1 }} />}
+                                    <Button variant="outlined" color="success" size="small" sx={{ fontWeight: 'bold', textTransform: 'none' }} onClick={() => handleEditClick(employee)}>Edit</Button>
+                                    <Button variant="outlined" color="error" size="small" sx={{ fontWeight: 'bold', textTransform: 'none' }} onClick={() => handleDeleteClick(employee)}>Delete</Button>
                                 </Grid>
                             </Grid>
                         ))}
                     </Grid>
+
 
                 )}
 
