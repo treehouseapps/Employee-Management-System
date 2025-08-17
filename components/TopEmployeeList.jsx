@@ -1,7 +1,7 @@
 import { Box, Typography, Avatar, CircularProgress } from '@mui/material';
 import { useFetchedData } from '../context/DataContext';
 
-const EMPLOYMENT_DEPARTEMENT = {
+const EMPLOYMENT_DEPARTMENT = {
     1: 'Human Resources (HR)',
     2: 'Finance & Accounting',
     3: 'Marketing & Sales',
@@ -20,11 +20,15 @@ const TopEmployeesList = () => {
                 borderRadius={3}
                 boxShadow="0 4px 16px rgba(0,0,0,0.08)"
                 fontFamily="Quicksand"
-                maxWidth={500}
+                width={{ xs: '100%', md: 600 }}
+                maxWidth="100%"
                 textAlign="center"
+                mx="auto"
             >
                 <CircularProgress />
-                <Typography mt={2} fontWeight="bold">Loading Top Employees...</Typography>
+                <Typography mt={2} fontWeight="bold">
+                    Loading Top Employees...
+                </Typography>
             </Box>
         );
     }
@@ -37,8 +41,10 @@ const TopEmployeesList = () => {
                 borderRadius={3}
                 boxShadow="0 4px 16px rgba(0,0,0,0.08)"
                 fontFamily="Quicksand"
-                maxWidth={500}
+                width={{ xs: '100%', md: 600 }}
+                maxWidth="100%"
                 textAlign="center"
+                mx="auto"
             >
                 <Typography fontWeight="bold" color="text.secondary">
                     No employees found.
@@ -55,7 +61,10 @@ const TopEmployeesList = () => {
             borderRadius={3}
             boxShadow="0 4px 16px rgba(0,0,0,0.08)"
             fontFamily="Quicksand"
-            maxWidth={600}
+            width={{ xs: '100%', md: 600 }}
+            maxWidth="100%"
+            mx="auto"
+            mb="5rem"
             sx={{ userSelect: 'none' }}
         >
             <Typography fontWeight="bold" mb={1} color="#222">
@@ -64,7 +73,7 @@ const TopEmployeesList = () => {
 
             <Box
                 display="grid"
-                gridTemplateColumns="40px 2fr 2fr 1.5fr"
+                gridTemplateColumns={{ xs: '30px 1fr 1fr 1fr', md: '40px 2fr 2fr 1.5fr' }}
                 fontWeight="bold"
                 color="#1976d2"
                 borderBottom="2px solid #1976d2"
@@ -82,7 +91,7 @@ const TopEmployeesList = () => {
                 <Box
                     key={_id || index}
                     display="grid"
-                    gridTemplateColumns="40px 2fr 2fr 1.5fr"
+                    gridTemplateColumns={{ xs: '30px 1fr 1fr 1fr', md: '40px 2fr 2fr 1.5fr' }}
                     alignItems="center"
                     py={1}
                     px={0.5}
@@ -96,7 +105,9 @@ const TopEmployeesList = () => {
                     fontSize="0.8rem"
                     color="#333"
                 >
-                    <Box textAlign="center" fontWeight="600">{index + 1}</Box>
+                    <Box textAlign="center" fontWeight="600">
+                        {index + 1}
+                    </Box>
 
                     <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, fontWeight: 600 }}>
                         <Avatar
@@ -104,13 +115,18 @@ const TopEmployeesList = () => {
                             alt={name}
                             src=""
                         >
-                            {name.split(' ').map(n => n[0]).join('').slice(0, 2).toUpperCase()}
+                            {name
+                                .split(' ')
+                                .map(n => n[0])
+                                .join('')
+                                .slice(0, 2)
+                                .toUpperCase()}
                         </Avatar>
                         {name}
                     </Box>
 
                     <Box sx={{ textTransform: 'capitalize' }}>
-                        {EMPLOYMENT_DEPARTEMENT[department] || 'Unknown'}
+                        {EMPLOYMENT_DEPARTMENT[department] || 'Unknown'}
                     </Box>
 
                     <Box
