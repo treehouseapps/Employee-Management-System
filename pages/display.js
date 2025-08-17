@@ -182,7 +182,6 @@ export default function DisplayEmployee() {
         setEditErrors({});
     };
 
-    // const getEmploymentDepartementText = (statusCode) => EMPLOYMENT_DEPARTEMENT[statusCode] || 'Unknown';
     const getEmploymentDepartementText = (id) => EMPLOYMENT_DEPARTEMENT[id] || 'Unknown';
     return (
         <Box >
@@ -261,7 +260,6 @@ export default function DisplayEmployee() {
                         </Typography>
                     </Box>
                 ) : (
-
                     // Listing Users
 
                     <Grid
@@ -275,7 +273,6 @@ export default function DisplayEmployee() {
                             userSelect: 'none',
                         }}
                     >
-                        {/* Header Row */}
                         <Grid
                             container
                             sx={{
@@ -296,7 +293,6 @@ export default function DisplayEmployee() {
                             <Grid item xs={2} />
                         </Grid>
 
-                        {/* Data Rows */}
                         {employees.map((employee, index) => (
                             <Grid
                                 container
@@ -312,106 +308,33 @@ export default function DisplayEmployee() {
                                     '&:hover': { bgcolor: '#eae6ff' },
                                 }}
                             >
-                                {/* No */}
-                                <Grid item xs={1} textAlign="center" fontWeight={600}>
-                                    {index + 1}
-                                </Grid>
-
-                                {/* Avatar + Name + Position */}
-                                <Grid
-                                    item
-                                    xs={2}
-                                    sx={{
-                                        display: 'flex',
-                                        alignItems: 'center',
-                                        gap: 1,
-                                        textAlign: 'left',
-                                    }}
-                                >
-
+                                <Grid item xs={1} textAlign="center" fontWeight={600}>{index + 1}</Grid>
+                                <Grid item xs={2} sx={{ display: 'flex', alignItems: 'center', gap: 1, textAlign: 'left' }}>
                                     <Box>
                                         <Typography fontWeight={600}>{employee.name}</Typography>
-                                        <Typography variant="caption" color="text.secondary">
-                                            {employee.position}
-                                        </Typography>
+                                        <Typography variant="caption" color="text.secondary">{employee.position}</Typography>
                                     </Box>
                                 </Grid>
-
-                                {/* Email */}
                                 <Grid item xs={2.5} sx={{ display: 'flex', flexDirection: 'column', gap: 0.3 }}>
                                     <Typography sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
                                         <EmailIcon fontSize="small" /> {employee.email}
                                     </Typography>
                                 </Grid>
-
-                                {/* Department */}
-                                <Grid
-                                    item
-                                    xs={3}
-                                    sx={{ display: 'flex', alignItems: 'center', gap: 0.5, textTransform: 'capitalize' }}
-                                >
+                                <Grid item xs={3} sx={{ display: 'flex', alignItems: 'center', gap: 0.5, textTransform: 'capitalize' }}>
                                     <BusinessCenter fontSize="small" /> {getEmploymentDepartementText(employee.department)}
                                 </Grid>
-
-                                {/* Employment Status */}
-                                <Grid
-                                    item
-                                    xs={1.5}
-                                    sx={{
-                                        fontWeight: 600,
-                                        color:
-                                            employee.employmentStatus === 'Full Time'
-                                                ? '#388e3c'
-                                                : '#f57c00',
-                                        display: 'flex',
-                                        alignItems: 'center',
-                                        gap: 0.5,
-                                        textTransform: 'capitalize',
-                                    }}
-                                >
+                                <Grid item xs={1.5} sx={{ fontWeight: 600, color: employee.employmentStatus === 'Full Time' ? '#388e3c' : '#f57c00', display: 'flex', alignItems: 'center', gap: 0.5, textTransform: 'capitalize' }}>
                                     <WorkHistory fontSize="small" /> {employee.employmentStatus || 'N/A'}
                                 </Grid>
-
-                                {/* Actions */}
-                                <Grid
-                                    item
-                                    xs={2}
-                                    sx={{
-                                        display: 'flex',
-                                        justifyContent: 'flex-end',
-                                        gap: 1,
-                                    }}
-                                >
-                                    {employee.empStatus === 'edited' && (
-                                        <EditIcon
-                                            color="primary"
-                                            sx={{ fontSize: 20, alignSelf: 'center', mr: 1 }}
-                                            titleAccess="Edited"
-                                        />
-                                    )}
-
-                                    <Button
-                                        variant="outlined"
-                                        color="success"
-                                        size="small"
-                                        sx={{ fontWeight: 'bold', textTransform: 'none' }}
-                                        onClick={() => handleEditClick(employee)}
-                                    >
-                                        Edit
-                                    </Button>
-                                    <Button
-                                        variant="outlined"
-                                        color="error"
-                                        size="small"
-                                        sx={{ fontWeight: 'bold', textTransform: 'none' }}
-                                        onClick={() => handleDeleteClick(employee)}
-                                    >
-                                        Delete
-                                    </Button>
+                                <Grid item xs={2} sx={{ display: 'flex', justifyContent: 'flex-end', gap: 1 }}>
+                                    {employee.empStatus === 'edited' && <EditIcon color="primary" sx={{ fontSize: 20, alignSelf: 'center', mr: 1 }} titleAccess="Edited" />}
+                                    <Button variant="outlined" color="success" size="small" sx={{ fontWeight: 'bold', textTransform: 'none' }}>Edit</Button>
+                                    <Button variant="outlined" color="error" size="small" sx={{ fontWeight: 'bold', textTransform: 'none' }}>Delete</Button>
                                 </Grid>
                             </Grid>
                         ))}
                     </Grid>
+
                 )}
 
                 {/* Edit Modal */}
