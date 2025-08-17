@@ -1,45 +1,49 @@
 import React from 'react';
 import { Container, Typography, Box } from '@mui/material';
+
 const MainPage = () => {
     return (
-        <Container
-            sx={{ padding: '10px' }}>
+        <Container sx={{ padding: { xs: '0.5rem', sm: '1rem', md: '2rem' } }}>
             <Box
                 component="main"
                 sx={{
                     boxShadow: '1px 2px 10px 0.5px lightgray',
                     margin: { xs: '1rem auto', md: '4rem auto' },
-                    padding: { xs: '1rem !important', sm: '1rem !important' },
+                    padding: { xs: '1rem', sm: '2rem', md: '3rem' },
                     borderRadius: '.5rem',
                     backgroundColor: 'white',
                     height: 'max-content',
-                    maxWidth: { xs: '95% !important', sm: '700px !important' }
+                    maxWidth: { xs: '100%', sm: '700px', md: '900px' },
                 }}
             >
-                <Box sx={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    gap: { xs: 2, sm: 3 }
-                }}>
+                <Box
+                    sx={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        gap: { xs: 2, sm: 3, md: 4 },
+                    }}
+                >
                     <Typography
                         variant="h4"
-                        fontFamily='Quicksand'
+                        fontFamily="Quicksand"
                         sx={{
                             fontWeight: 'bold',
                             textAlign: 'center',
-                            fontSize: { xs: '1.5rem', sm: '2.5rem' }
+                            fontSize: { xs: '1.5rem', sm: '2.2rem', md: '2.8rem' },
+                            lineHeight: 1.3,
                         }}
                     >
                         Welcome to Employee Management System
                     </Typography>
 
                     <Typography
-                        fontFamily='Quicksand'
+                        fontFamily="Quicksand"
                         variant="body1"
                         sx={{
                             textAlign: 'center',
-                            fontSize: { xs: '0.9rem', sm: '1.5rem' }
+                            fontSize: { xs: '0.95rem', sm: '1.2rem', md: '1.4rem' },
+                            maxWidth: '600px',
                         }}
                     >
                         This system helps you manage employee information efficiently.
@@ -48,6 +52,6 @@ const MainPage = () => {
             </Box>
         </Container>
     );
-}
+};
 
 export default MainPage;

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Box, InputAdornment, TextField, Typography } from '@mui/material';
+import { Box, InputAdornment, TextField, Typography, Backdrop } from '@mui/material';
 import Link from 'next/link';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
@@ -14,111 +14,123 @@ import {
 } from '@mui/icons-material';
 
 const Sidebar = () => {
-    const [sidechar, setSideChar] = useState('none');
-    const [iconHeight, setIconHeight] = useState('max-content');
     const [isOpen, setIsOpen] = useState(false);
 
-    const onsubmit = () => {
-        setSideChar(prev => (prev === 'grid' ? 'none' : 'grid'));
-        setIconHeight(prev => (prev === '100vh' ? 'max-content' : '100vh'));
-        setIsOpen(prev => !prev);
-    };
+    const toggleSidebar = () => setIsOpen(prev => !prev);
 
     return (
-        <Box sx={{
-            height: { xs: iconHeight, md: '110vh' },
-            backgroundColor: '#7F00FF',
-            boxShadow: '1px 2px 10px 0.5px lightgray',
-            display: 'block',
-            padding: '1px',
-            zIndex: 1200,
-            transition: 'width 0.3s ease-in-out',
-        }}>
+        <>
+            <Box
+                sx={{
+                    height: { xs: '100vh', md: '100vh' },
+                    backgroundColor: '#7F00FF',
+                    boxShadow: '1px 2px 10px 0.5px lightgray',
+                    padding: '8px',
+                    zIndex: 1300,
+                    transition: 'all 0.3s ease-in-out',
+                    position: { xs: 'fixed', md: 'fixed' },
+                    top: 0,
+                    left: { xs: isOpen ? 0 : '-100%' },
+                    width: { xs: '70%', sm: '50%', md: '250px' },
+                    overflowY: 'auto',
+                }}
+            >
+                <Box
+                    sx={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        gap: 2,
+                        margin: 2,
+                        color: 'white',
+                    }}
+                >
+                    <Box display="flex" gap={1} alignItems="center" mb={2}>
+                        <House sx={{ fontSize: 36 }} />
+                        <Link href="/" passHref>
+                            <Box display="flex" flexDirection="column" sx={{ cursor: 'pointer' }}>
+                                <Typography fontWeight="bold" fontSize={22}>TreeHouse</Typography>
+                                <Typography fontSize={14}>apps</Typography>
+                            </Box>
+                        </Link>
+                    </Box>
+
+                    <TextField
+                        size="small"
+                        variant="outlined"
+                        placeholder="Search"
+                        sx={{
+                            mb: 2,
+                            backgroundColor: 'white',
+                            borderRadius: '5px',
+                            width: '100%',
+                        }}
+                        InputProps={{
+                            endAdornment: (
+                                <InputAdornment position="end">
+                                    <Search sx={{ cursor: 'pointer' }} />
+                                </InputAdornment>
+                            ),
+                        }}
+                    />
+
+                    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+                        <Typography sx={{ fontSize: '15px', fontWeight: 'bold', mt: 1, display: 'flex', alignItems: 'center', gap: 0.5 }}>
+                            <ArrowRight /> Application
+                        </Typography>
+                        <Box display="flex" mb={1} gap={1} alignItems="center">
+                            <DashboardIcon fontSize="small" /> <Link href="/dashboard" passHref>Dashboard</Link>
+                        </Box>
+                        <Box display="flex" mb={1} gap={1} alignItems="center">
+                            <EmployeesIcon fontSize="small" /> <Link href="/display" passHref>Employees</Link>
+                        </Box>
+                        <Box display="flex" mb={1} gap={1} alignItems="center">
+                            <AddEmployeeIcon fontSize="small" /> <Link href="/register" passHref>Add Employee</Link>
+                        </Box>
+                        <Box display="flex" mb={1} gap={1} alignItems="center">
+                            <DepartmentsIcon fontSize="small" /> <Link href="/departments" passHref>Departments</Link>
+                        </Box>
+
+                        <Typography sx={{ fontSize: '15px', fontWeight: 'bold', mt: 2, display: 'flex', alignItems: 'center', gap: 0.5 }}>
+                            <ArrowRight /> Other
+                        </Typography>
+                        <Box display="flex" mb={1} gap={1} alignItems="center">
+                            <SettingsIcon fontSize="small" /> <Link href="/adminRegister" passHref>Admin Register</Link>
+                        </Box>
+                        <Box display="flex" mb={1} gap={1} alignItems="center">
+                            <RegisterIcon fontSize="small" /> <Link href="/login" passHref>Login</Link>
+                        </Box>
+                    </Box>
+                </Box>
+            </Box>
 
             <Box
-                onClick={onsubmit}
+                onClick={toggleSidebar}
                 sx={{
-                    float: 'right',
+                    position: 'fixed',
+                    top: 70,
+                    left: 5,
                     display: { xs: 'flex', md: 'none' },
                     border: '2px solid black',
                     borderRadius: '50%',
-                    width: 'max-content',
-                    height: 'max-content'
+                    width: 30,
+                    height: 30,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    cursor: 'pointer',
+                    backgroundColor: 'white',
+                    zIndex: 1400,
                 }}
             >
                 {isOpen ? <ChevronLeftIcon /> : <ChevronRightIcon />}
             </Box>
 
-            <Box sx={{
-                display: { xs: sidechar, md: 'block' },
-                gap: 2,
-                flexWrap: 'wrap',
-                margin: { xs: 3, md: 2 },
-                justifyContent: 'center',
-                color: 'white'
-            }}>
-                <Box display={'flex'} gap={1} alignItems={'center'}>
-                    <House sx={{ fontSize: 40 }} />
-                    <Link href="/" passHref><Box display={'flex'}><Typography fontWeight={'bold'} fontSize={25}>TreeHouse</Typography><Typography fontSize={15}>apps</Typography></Box></Link>
-                </Box>
-                <TextField
-                    size="small"
-                    variant="outlined"
-                    placeholder="Search"
-                    sx={{
-                        margin: '10px 0px',
-                        backgroundColor: 'white', borderRadius: '5px',
-                        width: '100%', border: 'none',
-                    }}
-                    InputProps={{
-                        endAdornment: (
-                            <InputAdornment position='end'>
-                                <Search sx={{ cursor: 'pointer' }} />
-                            </InputAdornment>
-                        ),
-                    }}
-                />
-                <Box
-                    sx={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        alignItems: 'flex-start',
-                        gap: 1,
-                        p: 1,
-                    }}
-                >
-                    <Typography sx={{ fontSize: '15px', margin: '.2rem', display: 'flex', alignItems: 'center' }}><ArrowRight />Application</Typography>
-
-                    <Box display="flex" mb={1} gap={1} alignItems="center" fontWeight={'light'}>
-                        <DashboardIcon fontSize="small" /> <Link href="/dashboard" passHref>Dashboard</Link>
-                    </Box>
-
-                    <Box display="flex" mb={1} gap={1} alignItems="center" fontWeight={'light'}>
-                        <EmployeesIcon fontSize="small" /> <Link href="/display" passHref>Employees</Link>
-                    </Box>
-
-                    <Box display="flex" mb={1} gap={1} alignItems="center" fontWeight={'light'}>
-                        <AddEmployeeIcon fontSize="small" /> <Link href="/register" passHref>Add Employee</Link>
-                    </Box>
-
-                    <Box display="flex" mb={1} gap={1} alignItems="center" fontWeight={'light'}>
-                        <DepartmentsIcon fontSize="small" /> <Link href="/departments" passHref>Departments</Link>
-                    </Box>
-
-                    <Typography sx={{ fontSize: '15px', margin: '.2rem', display: 'flex', alignItems: 'center' }}><ArrowRight />Other</Typography>
-
-                    <Box display="flex" mb={1} gap={1} alignItems="center" fontWeight={'light'}>
-                        <SettingsIcon fontSize="small" /> <Link href="/adminRegister" passHref>Admin Register</Link>
-                    </Box>
-
-                    <Box display="flex" mb={1} gap={1} alignItems="center" fontWeight={'light'}>
-                        <RegisterIcon fontSize="small" /> <Link href="/login" passHref>Login</Link>
-                    </Box>
-                </Box>
-
-            </Box>
-        </Box>
+            <Backdrop
+                open={isOpen}
+                onClick={toggleSidebar}
+                sx={{ zIndex: 1200, backgroundColor: 'rgba(0,0,0,0.3)', display: { xs: 'block', md: 'none' } }}
+            />
+        </>
     );
-}
+};
 
 export default Sidebar;

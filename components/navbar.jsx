@@ -1,13 +1,19 @@
 import React, { useState, useRef } from 'react';
-import { AppBar, Toolbar, Paper, Popper, Typography, Button, Box } from '@mui/material';
-import { ArrowDropDown, Home, Logout, Person } from '@mui/icons-material';
+import { AppBar, Toolbar, Paper, Popper, Typography, Button, Box, IconButton, Drawer, List, ListItem, ListItemText } from '@mui/material';
+import { ArrowDropDown, Home, Logout, Person, Menu } from '@mui/icons-material';
 import Link from 'next/link';
 import { useUserData } from '../context/userContext'
 
 function Navbar() {
     const { user, setUser } = useUserData()
     const [profile, setProfile] = useState(false)
+    const [mobileOpen, setMobileOpen] = useState(false)
     const anchorRef = useRef(null);
+
+    const toggleDrawer = () => {
+        setMobileOpen(!mobileOpen)
+    }
+
     return (
         <Box sx={{ margin: '0 auto', width: '100%' }}>
             <AppBar
@@ -21,30 +27,29 @@ function Navbar() {
             >
                 <Toolbar
                     sx={{
-                        flexDirection: { xs: 'column', sm: 'row' },
-                        padding: { xs: '0.5rem', sm: '0 1rem' },
-                        gap: { xs: '0.5rem', sm: '0' },
+                        flexDirection: 'row',
+                        justifyContent: 'space-between',
+                        padding: { xs: '0.5rem 1rem', sm: '0 2rem' },
                     }}
                 >
                     <Typography
                         variant="h6"
                         fontFamily={'Quicksand'}
                         sx={{
-                            flexGrow: 1,
+                            flexGrow: { xs: 1, sm: 0 },
                             color: 'black',
-                            paddingLeft: { xs: '0', sm: '4rem' },
                             fontSize: { xs: '1rem', sm: '1.25rem' },
-                            textAlign: { xs: 'center', sm: 'left' },
+                            textAlign: 'left',
                         }}
                     >
                         Employee Management System
                     </Typography>
+
                     <Box
                         sx={{
-                            display: 'flex',
-                            gap: { xs: '0.5rem', sm: '1rem' },
+                            display: { xs: 'none', sm: 'flex' },
+                            gap: '1rem',
                             alignItems: 'center',
-                            mr: '2rem'
                         }}
                     >
                         <Link href="/" passHref>
@@ -60,16 +65,16 @@ function Navbar() {
                                 Home
                             </Button>
                         </Link>
+
                         <Box
                             ref={anchorRef}
                             display="flex"
                             alignItems="center"
                             p="0.5rem" gap={0.5}
                             sx={{
-                                cursor: 'pointer', fontFamily: 'Quicksand',
-                                '&:hover': {
-                                    backgroundColor: 'lightgray',
-                                },
+                                cursor: 'pointer',
+                                fontFamily: 'Quicksand',
+                                '&:hover': { backgroundColor: 'lightgray' },
                             }}
                             onMouseEnter={() => setProfile(true)}
                             onMouseLeave={() => setProfile(false)}
@@ -85,12 +90,14 @@ function Navbar() {
                             onMouseLeave={() => setProfile(false)}
                             style={{ zIndex: 1300 }}
                         >
-                            <Paper elevation={3} sx={{ p: '2px 0px', minWidth: 150, display: 'grid', placeItems: 'center' }} >
-                                <Typography variant="subtitle1"
+                            <Paper elevation={3} sx={{ p: '4px 8px', minWidth: 150, display: 'grid', placeItems: 'center' }} >
+                                <Typography
+                                    variant="subtitle1"
                                     fontFamily={'Quicksand'}
                                     fontWeight={900}
-                                    fontSize={20}
-                                    padding={0} margin={0} gutterBottom>
+                                    fontSize={18}
+                                    gutterBottom
+                                >
                                     {user}
                                 </Typography>
                                 <Link href="/logout" passHref>
@@ -100,7 +107,7 @@ function Navbar() {
                                         sx={{
                                             color: 'black',
                                             fontFamily: 'Quicksand',
-                                            fontSize: { xs: '0.5rem', sm: '13px' },
+                                            fontSize: { xs: '0.75rem', sm: '0.9rem' },
                                         }}
                                     >
                                         Logout
@@ -108,12 +115,45 @@ function Navbar() {
                                 </Link>
                             </Paper>
                         </Popper>
-
                     </Box>
-                </Toolbar >
-            </AppBar >
 
-        </Box >
+                    <IconButton
+                        edge="end"
+                        color="inherit"
+                        aria-label="menu"
+                        sx={{ display: { xs: 'flex', sm: 'none' }, color: 'black' }}
+                        onClick={toggleDrawer}
+                    >
+                        <Menu />
+                    </IconButton>
+                </Toolbar>
+            </AppBar>
+
+            <Drawer
+                anchor="right"
+                open={mobileOpen}
+                onClose={toggleDrawer}
+                sx={{ display: { xs: 'block', sm: 'none' } }}
+            >
+                <Box sx={{ width: 220 }} role="presentation" onClick={toggleDrawer}>
+                    <List>
+                        <ListItem>
+                            <Link href="/" passHref>
+                                <ListItemText primary="Home" />
+                            </Link>
+                        </ListItem>
+                        <ListItem>
+                            <ListItemText primary={user || 'Admin'} />
+                        </ListItem>
+                        <ListItem>
+                            <Link href="/logout" passHref>
+                                <ListItemText primary="Logout" />
+                            </Link>
+                        </ListItem>
+                    </List>
+                </Box>
+            </Drawer>
+        </Box>
     );
 }
 
