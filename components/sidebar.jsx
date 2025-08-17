@@ -15,35 +15,27 @@ import {
 
 const Sidebar = () => {
     const [isOpen, setIsOpen] = useState(false);
-
     const toggleSidebar = () => setIsOpen(prev => !prev);
 
     return (
         <>
             <Box
                 sx={{
-                    height: { xs: '100vh', md: '100vh' },
+                    height: '100vh',
                     backgroundColor: '#7F00FF',
                     boxShadow: '1px 2px 10px 0.5px lightgray',
                     padding: '8px',
                     zIndex: 1300,
                     transition: 'all 0.3s ease-in-out',
-                    position: { xs: 'fixed', md: 'fixed' },
+                    position: 'fixed',
                     top: 0,
-                    left: { xs: isOpen ? 0 : '-100%' },
+                    left: { xs: isOpen ? 0 : '-100%', md: 0 },
                     width: { xs: '70%', sm: '50%', md: '250px' },
                     overflowY: 'auto',
+                    display: { xs: isOpen ? 'block' : 'none', md: 'block' },
                 }}
             >
-                <Box
-                    sx={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        gap: 2,
-                        margin: 2,
-                        color: 'white',
-                    }}
-                >
+                <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, margin: 2, color: 'white' }}>
                     <Box display="flex" gap={1} alignItems="center" mb={2}>
                         <House sx={{ fontSize: 36 }} />
                         <Link href="/" passHref>
@@ -58,12 +50,7 @@ const Sidebar = () => {
                         size="small"
                         variant="outlined"
                         placeholder="Search"
-                        sx={{
-                            mb: 2,
-                            backgroundColor: 'white',
-                            borderRadius: '5px',
-                            width: '100%',
-                        }}
+                        sx={{ mb: 2, backgroundColor: 'white', borderRadius: '5px', width: '100%' }}
                         InputProps={{
                             endAdornment: (
                                 <InputAdornment position="end">

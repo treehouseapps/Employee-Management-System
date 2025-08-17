@@ -10,7 +10,6 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 import Navbar from '../components/navbar';
 import Link from 'next/link';
 
-// Mapping numeric department IDs to readable names
 const departmentNames = {
     1: 'HR',
     2: 'Finance',
@@ -24,7 +23,6 @@ const Departments = () => {
     const [anchorEl, setAnchorEl] = useState(null);
     const [selectedDeptId, setSelectedDeptId] = useState(null);
 
-    // Group employees by department (use readable names)
     const departmentMap = {};
     employees.forEach((emp) => {
         const deptId = emp?.department;
@@ -72,7 +70,6 @@ const Departments = () => {
                     py: 1,
                 }}
             >
-                {/* Top Section */}
                 <Box
                     sx={{
                         mb: 2,
@@ -102,7 +99,6 @@ const Departments = () => {
 
                 <Box sx={{ width: '100%' }}>
                     <Grid container spacing={2} alignItems="center" justifyContent="space-between">
-                        {/* Add Department Button */}
                         <Grid item xs={12} md={3}>
                             <Link href='/login'>
                                 <Button
@@ -121,7 +117,6 @@ const Departments = () => {
                             </Link>
                         </Grid>
 
-                        {/* Summary Cards */}
                         <Grid item xs={12} md={9}>
                             <Grid container spacing={2}>
                                 <Grid item xs={12} sm={6} md={4}>
@@ -172,7 +167,6 @@ const Departments = () => {
                     </Grid>
                 </Box>
 
-                {/* Department List */}
                 <Box>
                     <Typography
                         variant="h6"

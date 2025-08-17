@@ -62,7 +62,6 @@ const TopEmployeesList = () => {
                 🌟 Top Employees
             </Typography>
 
-            {/* Header Row */}
             <Box
                 display="grid"
                 gridTemplateColumns="40px 2fr 2fr 1.5fr"
@@ -79,7 +78,6 @@ const TopEmployeesList = () => {
                 <Box>Status</Box>
             </Box>
 
-            {/* Data Rows */}
             {employees.slice(0, 4).map(({ _id, name, department, employmentStatus }, index) => (
                 <Box
                     key={_id || index}
@@ -101,7 +99,6 @@ const TopEmployeesList = () => {
                     <Box textAlign="center" fontWeight="600">{index + 1}</Box>
 
                     <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, fontWeight: 600 }}>
-
                         <Avatar
                             sx={{ width: 28, height: 28, fontSize: '0.75rem', bgcolor: '#1976d2' }}
                             alt={name}

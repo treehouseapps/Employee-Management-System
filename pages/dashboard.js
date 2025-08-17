@@ -20,7 +20,6 @@ const Dashboard = () => {
     const dashboardData = {
         totalEmployees: employees?.length || 0,
         totalDepartments: new Set(employees?.map(emp => emp?.department) || []).size,
-
         departmentDistribution: {
             HR: employees?.filter(emp => emp?.department === 1)?.length || 0,
             Finance: employees?.filter(emp => emp?.department === 2)?.length || 0,
@@ -38,8 +37,8 @@ const Dashboard = () => {
             male: employees?.filter(emp => emp?.gender === 'Male')?.length || 0,
             female: employees?.filter(emp => emp?.gender === 'Female')?.length || 0
         }
-
     };
+
     const statusData = [
         { name: 'Full Time', value: dashboardData.employmentStatus.fulltime },
         { name: 'Part Time', value: dashboardData.employmentStatus.parttime },
@@ -50,10 +49,7 @@ const Dashboard = () => {
     return (
         <Box>
             <Navbar />
-            <Box sx={{
-                padding: { xs: '0.5rem 1rem', md: '1rem 2rem' },
-                position: 'relative',
-            }}>
+            <Box sx={{ padding: { xs: '1rem', md: '1rem 2rem' }, position: 'relative' }}>
                 <Backdrop
                     sx={{
                         color: '#fff',
@@ -65,240 +61,119 @@ const Dashboard = () => {
                 >
                     <CircularProgress color="primary" />
                 </Backdrop>
-                <Typography variant="h4" component="h1" sx={{
-                    fontWeight: 'bold',
-                    color: 'black',
-                    fontFamily: 'Quicksand',
-                    marginLeft: { xs: '2rem', md: 0 },
-                    fontSize: { xs: '1.5rem', md: '2rem' },
-                }}>
+
+                <Typography
+                    variant="h4"
+                    component="h1"
+                    sx={{
+                        fontWeight: 'bold',
+                        color: 'black',
+                        fontFamily: 'Quicksand',
+                        marginBottom: 3,
+                        fontSize: { xs: '1.5rem', md: '2rem' }
+                    }}
+                >
                     Dashboard Overview
                 </Typography>
-                <Box display={'grid'} gridTemplateColumns={'2fr 1fr'}>
-                    <Box >
-                        <Box display='grid'
-                            gridTemplateColumns={{
-                                xs: '1fr',
-                                sm: 'repeat(3, 1fr)',
-                                md: 'repeat(5, 1fr)'
-                            }}
-                        >
-                            <Box
-                                display='inline-block'
-                                boxShadow={'1px 1px 10px 1px lightgray'}
-                                alignItems='center'
-                                justifyContent='center'
-                                margin={2}
-                                height='max-content'
-                                padding={'.5rem 1rem'}
-                                pr={4}
-                                backgroundColor='white'
-                                borderRadius={4}
-                                width='max-content'
-                                minHeight='200px' >
-                                <Box sx={{
-                                    backgroundColor: '#FFB343',
-                                    p: '0px 2px',
-                                    borderRadius: '20%',
-                                    width: 'max-content',
-                                    mt: '1rem'
-                                }}>
-                                    <GroupsIcon sx={{ color: 'white', fontSize: '1.8rem' }} />
-                                </Box>
-                                <Box p={'.2rem'}>
-                                    <Typography sx={{
-                                        fontWeight: 'bold', margin: '.5rem 0rem',
-                                        fontSize: '.8rem',
-                                    }}>
-                                        Total Employees
-                                    </Typography>
-                                    <Typography fontSize={17} fontWeight={'bold'}>{dashboardData.totalEmployees}</Typography>
-                                    <Typography fontSize={'13px'} mb={'1rem'} mt={'.2rem'}>Task</Typography>
-                                    <Typography color='#0BDA51' fontSize={'13px'}>+35% This Month</Typography>
-                                </Box>
-                            </Box>
-                            <Box
-                                display='inline-block'
-                                boxShadow={'1px 1px 10px 1px lightgray'}
-                                alignItems='center'
-                                justifyContent='center'
-                                margin={2}
-                                height='max-content'
-                                padding={'.5rem 1rem'}
-                                pr={4}
-                                backgroundColor='white'
-                                borderRadius={4}
-                                width='max-content'
-                                minHeight='200px' >
-                                <Box sx={{
-                                    backgroundColor: '#0066FF',
-                                    p: '0px 2px',
-                                    borderRadius: '20%',
-                                    width: 'max-content',
-                                    mt: '1rem'
-                                }}>
-                                    <GroupsIcon sx={{ color: 'white', fontSize: '1.8rem' }} />
-                                </Box>
-                                <Box p={'.2rem'}>
-                                    <Typography sx={{
-                                        fontWeight: 'bold', margin: '.5rem 0rem',
-                                        fontSize: '.8rem',
-                                    }}>
-                                        Total Departments
-                                    </Typography>
-                                    <Typography fontSize={17} fontWeight={'bold'}>{dashboardData.totalDepartments}</Typography>
-                                    <Typography fontSize={'13px'} mb={'1rem'} mt={'.2rem'}>Task</Typography>
-                                    <Typography color='#0BDA51' fontSize={'13px'}>5% This Month</Typography>
-                                </Box>
-                            </Box>
-                            <Box
-                                display='inline-block'
-                                boxShadow={'1px 1px 10px 1px lightgray'}
-                                alignItems='center'
-                                justifyContent='center'
-                                margin={2}
-                                height='max-content'
-                                padding={'.5rem 1rem'}
-                                pr={4}
-                                backgroundColor='white'
-                                borderRadius={4}
-                                width='max-content'
-                                minHeight='200px' >
-                                <Box sx={{
-                                    backgroundColor: '#7C3AED',
-                                    p: '0px 2px',
-                                    borderRadius: '20%',
-                                    width: 'max-content',
-                                    mt: '1rem'
-                                }}>
-                                    <GroupsIcon sx={{ color: 'white', fontSize: '1.8rem' }} />
-                                </Box>
-                                <Box p={'.2rem'}>
-                                    <Typography sx={{
-                                        fontWeight: 'bold', margin: '.5rem 0rem',
-                                        fontSize: '.8rem',
-                                    }}>Gender Distribution</Typography>
-                                    <Grid container spacing={2} alignItems="center">
-                                        <Grid item xs={6} display="flex" alignItems="center" gap={1}>
-                                            <Man color="primary" />
-                                            <Typography>{dashboardData.genderDistribution.male}</Typography>
-                                        </Grid>
-                                        <Grid item xs={6} display="flex" alignItems="center" gap={1}>
-                                            <Woman color="secondary" />
-                                            <Typography>{dashboardData.genderDistribution.female}</Typography>
-                                        </Grid>
-                                    </Grid>
 
-                                </Box>
-                            </Box>
-                        </Box>
-                        <Box p={2} fontFamily="Quicksand">
-                            <Typography
-                                variant="h6"
-                                component="h2"
-                                fontWeight="bold"
-                                mb={2}
-                                sx={{ color: '#333', fontSize: '1.1rem' }}
-                            >
-                                Employees by Department
-                            </Typography>
-
-                            <Box
-                                display="grid"
-                                gridTemplateColumns={{ xs: '1fr', sm: 'repeat(2, 1fr)', md: 'repeat(3, 1fr)' }}
-                                gap={3}
-                            >
-                                {[
-                                    {
-                                        title: 'Human Resources',
-                                        icon: <GroupOutlined />,
-                                        bg: '#E3F2FD',
-                                        iconColor: '#1976D2',
-                                        count: dashboardData.departmentDistribution.HR,
-                                    },
-                                    {
-                                        title: 'Finance',
-                                        icon: <AccountBalanceWalletOutlined />,
-                                        bg: '#FFF3E0',
-                                        iconColor: '#FB8C00',
-                                        count: dashboardData.departmentDistribution.Finance,
-                                    },
-                                    {
-                                        title: 'Operations',
-                                        icon: <BuildOutlined />,
-                                        bg: '#F1F8E9',
-                                        iconColor: '#689F38',
-                                        count: dashboardData.departmentDistribution.Operations,
-                                    },
-                                    {
-                                        title: 'Engineering',
-                                        icon: <MemoryOutlined />,
-                                        bg: '#F3E5F5',
-                                        iconColor: '#9C27B0',
-                                        count: dashboardData.departmentDistribution.IT,
-                                    },
-                                    {
-                                        title: 'Marketing',
-                                        icon: <TrendingUpOutlined />,
-                                        bg: '#FFFDE7',
-                                        iconColor: '#FBC02D',
-                                        count: dashboardData.departmentDistribution.Marketing,
-                                    },
-                                ].map((dept, i) => (
+                <Grid container spacing={2}>
+                    <Grid item xs={12} md={8}>
+                        <Grid container spacing={2}>
+                            {[
+                                {
+                                    title: 'Total Employees',
+                                    value: dashboardData.totalEmployees,
+                                    icon: <GroupsIcon sx={{ color: 'white', fontSize: '1.8rem' }} />,
+                                    color: '#FFB343'
+                                },
+                                {
+                                    title: 'Total Departments',
+                                    value: dashboardData.totalDepartments,
+                                    icon: <GroupsIcon sx={{ color: 'white', fontSize: '1.8rem' }} />,
+                                    color: '#0066FF'
+                                },
+                                {
+                                    title: 'Gender Distribution',
+                                    value: null,
+                                    icon: null,
+                                    color: '#7C3AED'
+                                }
+                            ].map((card, i) => (
+                                <Grid item xs={6} sm={6} md={4} key={i}>
                                     <Box
-                                        key={i}
-                                        display="flex"
-                                        alignItems="center"
-                                        bgcolor="white"
-                                        borderRadius={3}
-                                        p={2}
-                                        boxShadow="0 2px 10px rgba(0,0,0,0.05)"
-                                        sx={{
-                                            transition: 'transform 0.2s ease',
-                                            '&:hover': {
-                                                transform: 'translateY(-4px)',
-                                                boxShadow: '0 4px 16px rgba(0,0,0,0.08)',
-                                            },
-                                        }}
+                                        display='flex'
+                                        flexDirection='column'
+                                        alignItems='center'
+                                        boxShadow='1px 1px 10px 1px lightgray'
+                                        padding='1rem'
+                                        borderRadius={2}
+                                        bgcolor='white'
+                                        minHeight='200px'
                                     >
-                                        <Box
-                                            display="flex"
-                                            alignItems="center"
-                                            justifyContent="center"
-                                            width={50}
-                                            height={50}
-                                            borderRadius="12px"
-                                            mr={2}
-                                            sx={{ backgroundColor: dept.bg, color: dept.iconColor }}
-                                        >
-                                            {dept.icon}
-                                        </Box>
-
-                                        <Box>
-                                            <Typography fontWeight={600} fontSize="1rem" color="#333">
-                                                {dept.title}
-                                            </Typography>
-                                            <Typography fontSize="0.85rem" color="gray">
-                                                {dept.count} Employees
-                                            </Typography>
-                                        </Box>
+                                        {card.icon && (
+                                            <Box sx={{ backgroundColor: card.color, p: 1, borderRadius: '20%', mb: 1 }}>
+                                                {card.icon}
+                                            </Box>
+                                        )}
+                                        {card.title === 'Gender Distribution' ? (
+                                            <>
+                                                <Typography fontWeight='bold' fontSize='.8rem' mb={1}>Gender Distribution</Typography>
+                                                <Grid container spacing={1}>
+                                                    <Grid item xs={6} display='flex' alignItems='center' justifyContent='center' gap={1}>
+                                                        <Man color='primary' /> <Typography>{dashboardData.genderDistribution.male}</Typography>
+                                                    </Grid>
+                                                    <Grid item xs={6} display='flex' alignItems='center' justifyContent='center' gap={1}>
+                                                        <Woman color='secondary' /> <Typography>{dashboardData.genderDistribution.female}</Typography>
+                                                    </Grid>
+                                                </Grid>
+                                            </>
+                                        ) : (
+                                            <>
+                                                <Typography fontWeight='bold' fontSize='.8rem'>{card.title}</Typography>
+                                                <Typography fontSize={17} fontWeight='bold'>{card.value}</Typography>
+                                                <Typography fontSize='13px' mt={0.5} mb={1}>Task</Typography>
+                                                <Typography color='#0BDA51' fontSize='13px'>+35% This Month</Typography>
+                                            </>
+                                        )}
                                     </Box>
+                                </Grid>
+                            ))}
+                        </Grid>
+
+                        <Box mt={4}>
+                            <Typography variant='h6' fontWeight='bold' mb={2}>Employees by Department</Typography>
+                            <Grid container spacing={2}>
+                                {[
+                                    { title: 'Human Resources', icon: <GroupOutlined />, bg: '#E3F2FD', iconColor: '#1976D2', count: dashboardData.departmentDistribution.HR },
+                                    { title: 'Finance', icon: <AccountBalanceWalletOutlined />, bg: '#FFF3E0', iconColor: '#FB8C00', count: dashboardData.departmentDistribution.Finance },
+                                    { title: 'Operations', icon: <BuildOutlined />, bg: '#F1F8E9', iconColor: '#689F38', count: dashboardData.departmentDistribution.Operations },
+                                    { title: 'Engineering', icon: <MemoryOutlined />, bg: '#F3E5F5', iconColor: '#9C27B0', count: dashboardData.departmentDistribution.IT },
+                                    { title: 'Marketing', icon: <TrendingUpOutlined />, bg: '#FFFDE7', iconColor: '#FBC02D', count: dashboardData.departmentDistribution.Marketing }
+                                ].map((dept, i) => (
+                                    <Grid item xs={12} sm={6} md={4} key={i}>
+                                        <Box display='flex' alignItems='center' bgcolor='white' borderRadius={3} p={2} boxShadow='0 2px 10px rgba(0,0,0,0.05)'>
+                                            <Box display='flex' alignItems='center' justifyContent='center' width={50} height={50} borderRadius='12px' mr={2} sx={{ backgroundColor: dept.bg, color: dept.iconColor }}>
+                                                {dept.icon}
+                                            </Box>
+                                            <Box>
+                                                <Typography fontWeight={600} fontSize='1rem' color='#333'>{dept.title}</Typography>
+                                                <Typography fontSize='0.85rem' color='gray'>{dept.count} Employees</Typography>
+                                            </Box>
+                                        </Box>
+                                    </Grid>
                                 ))}
-                            </Box>
+                            </Grid>
                         </Box>
+                    </Grid>
 
-                    </Box>
-                    <Box>
-                        <Box sx={{ marginTop: '-30px' }}>
-                            <Piechart data={statusData} />
-                        </Box>
+                    <Grid item xs={12} md={4}>
+                        <Piechart data={statusData} />
                         <TopEmployeesList />
-                    </Box>
-                </Box>
-
+                    </Grid>
+                </Grid>
             </Box>
-        </Box >
+        </Box>
     );
-}
+};
 
 export default Dashboard;
