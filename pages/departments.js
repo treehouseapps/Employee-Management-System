@@ -19,7 +19,7 @@ const departmentNames = {
 };
 
 const Departments = () => {
-    const { fetchedData: employees = [], loading } = useFetchedData();
+    const { fetchedData: employees = [] } = useFetchedData();
     const [anchorEl, setAnchorEl] = useState(null);
     const [selectedDeptId, setSelectedDeptId] = useState(null);
 
@@ -67,16 +67,17 @@ const Departments = () => {
                     backgroundColor: '#f8f9fb',
                     minHeight: '100vh',
                     px: { xs: 2, sm: 4, md: 6 },
-                    py: 1,
+                    py: { xs: 2, sm: 3 },
                 }}
             >
+                {/* Header */}
                 <Box
                     sx={{
-                        mb: 2,
+                        mb: 3,
                         display: 'flex',
                         justifyContent: 'space-between',
-                        alignItems: 'center',
-                        flexWrap: 'wrap',
+                        alignItems: { xs: 'flex-start', sm: 'center' },
+                        flexDirection: { xs: 'column', sm: 'row' },
                         gap: 2,
                     }}
                 >
@@ -87,19 +88,21 @@ const Departments = () => {
                                 fontWeight: 600,
                                 color: '#7F00FF',
                                 fontFamily: 'Quicksand',
+                                mb: { xs: 1, sm: 0 },
                             }}
                         >
                             Department Overview
                         </Typography>
-                        <Typography variant="body1" sx={{ color: '#555' }}>
-                            A central view of all existing departments and their status. This helps you organize your workforce better and keep track of department-specific staffing.
+                        <Typography variant="body2" sx={{ color: '#555' }}>
+                            A central view of all existing departments and their status.
                         </Typography>
                     </Box>
                 </Box>
 
-                <Box sx={{ width: '100%' }}>
-                    <Grid container spacing={2} alignItems="center" justifyContent="space-between">
-                        <Grid item xs={12} md={3}>
+                {/* Top Actions + Stats */}
+                <Box sx={{ width: '100%', mb: 3 }}>
+                    <Grid container spacing={2}>
+                        <Grid item xs={12} sm={6} md={3}>
                             <Link href='/login'>
                                 <Button
                                     fullWidth
@@ -117,7 +120,7 @@ const Departments = () => {
                             </Link>
                         </Grid>
 
-                        <Grid item xs={12} md={9}>
+                        <Grid item xs={12} sm={6} md={9}>
                             <Grid container spacing={2}>
                                 <Grid item xs={12} sm={6} md={4}>
                                     <Paper
@@ -126,10 +129,10 @@ const Departments = () => {
                                             p: 2,
                                             backgroundColor: '#fff',
                                             borderRadius: 3,
-                                            textAlign: 'center',
-                                            display: 'inline-flex',
+                                            display: 'flex',
+                                            flexDirection: 'column',
                                             alignItems: 'center',
-                                            gap: '0.5rem'
+                                            textAlign: 'center',
                                         }}
                                     >
                                         <Typography variant="subtitle2" sx={{ color: '#999' }}>
@@ -148,10 +151,10 @@ const Departments = () => {
                                             p: 2,
                                             backgroundColor: '#fff',
                                             borderRadius: 3,
-                                            textAlign: 'center',
-                                            display: 'inline-flex',
+                                            display: 'flex',
+                                            flexDirection: 'column',
                                             alignItems: 'center',
-                                            gap: '0.5rem'
+                                            textAlign: 'center',
                                         }}
                                     >
                                         <Typography variant="subtitle2" sx={{ color: '#999' }}>
@@ -167,6 +170,7 @@ const Departments = () => {
                     </Grid>
                 </Box>
 
+                {/* Department List */}
                 <Box>
                     <Typography
                         variant="h6"
@@ -175,13 +179,13 @@ const Departments = () => {
                         Department List
                     </Typography>
 
-                    <Grid container spacing={3}>
+                    <Grid container spacing={2}>
                         {departments.map((dept) => (
                             <Grid item xs={12} sm={6} md={3} key={dept.id}>
                                 <Paper
                                     elevation={1}
                                     sx={{
-                                        p: '8px 15px',
+                                        p: 2,
                                         borderRadius: 3,
                                         display: 'flex',
                                         flexDirection: 'column',
@@ -196,16 +200,17 @@ const Departments = () => {
                                             justifyContent: 'space-between',
                                         }}
                                     >
-                                        <Avatar sx={{ bgcolor: '#7F00FF', width: 32, height: 32, p: 1 }}>
-                                            <PeopleIcon />
+                                        <Avatar sx={{ bgcolor: '#7F00FF', width: 36, height: 36 }}>
+                                            <PeopleIcon fontSize="small" />
                                         </Avatar>
                                         <IconButton
                                             onClick={(e) => handleMenuOpen(e, dept.id)}
+                                            size="small"
                                             aria-controls={selectedDeptId === dept.id ? 'status-menu' : undefined}
                                             aria-haspopup="true"
                                             aria-expanded={selectedDeptId === dept.id ? 'true' : undefined}
                                         >
-                                            <MoreVertIcon />
+                                            <MoreVertIcon fontSize="small" />
                                         </IconButton>
                                     </Box>
 
