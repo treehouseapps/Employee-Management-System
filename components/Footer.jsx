@@ -11,28 +11,30 @@ const Footer = () => {
             sx={{
                 backgroundColor: '#2C3E50',
                 color: '#ECF0F1',
-                py: { xs: 1, md: 3 },
-                position: 'absolute',
-                bottom: 0,
+                py: { xs: 2, sm: 3 },
+                mt: { xs: 4, md: 6 },
                 width: '100%',
-                zIndex: 2200
             }}
         >
             <Container maxWidth="lg">
                 <Box
                     sx={{
                         display: 'flex',
-                        flexDirection: { xs: 'column', sm: 'row' },
+                        flexDirection: { xs: 'column', md: 'row' },
                         justifyContent: 'space-between',
-                        alignItems: 'center',
-                        gap: 2
+                        alignItems: { xs: 'flex-start', md: 'center' },
+                        textAlign: { xs: 'center', md: 'left' },
+                        gap: { xs: 2, md: 0 },
                     }}
                 >
-                    <Typography variant="body2" sx={{ fontFamily: 'Quicksand' }}>
+                    <Typography
+                        variant="body2"
+                        sx={{ fontFamily: 'Quicksand', fontSize: { xs: '0.8rem', md: '0.9rem' } }}
+                    >
                         © {new Date().getFullYear()} TreeHouseApps. All rights reserved.
                     </Typography>
 
-                    <Box sx={{ display: 'flex', gap: 2 }}>
+                    <Box sx={{ display: 'flex', gap: { xs: 1.5, md: 2 }, justifyContent: { xs: 'center', md: 'flex-end' }, width: { xs: '100%', md: 'auto' } }}>
                         <IconButton
                             component={Link}
                             href="https://github.com/treehouseapps"
@@ -63,4 +65,4 @@ const Footer = () => {
     );
 };
 
-export default Footer; 
+export default Footer;
