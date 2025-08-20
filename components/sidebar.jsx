@@ -80,9 +80,7 @@ const Sidebar = () => {
                         <Typography sx={{ fontSize: '15px', fontWeight: 'bold', mt: 2, display: 'flex', alignItems: 'center', gap: 0.5 }}>
                             <ArrowRight /> Other
                         </Typography>
-                        <Box display="flex" mb={1} gap={1} alignItems="center">
-                            <SettingsIcon fontSize="small" /> <Link href="/adminRegister" passHref>Admin Register</Link>
-                        </Box>
+
                         <Box display="flex" mb={1} gap={1} alignItems="center">
                             <RegisterIcon fontSize="small" /> <Link href="/login" passHref>Login</Link>
                         </Box>

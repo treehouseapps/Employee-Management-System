@@ -20,7 +20,7 @@ const EditEmployeeModal = ({
     handleInputChange,
     handleSave,
 }) => {
-    if (!tempEmpData) return null; // safeguard
+    if (!tempEmpData) return null;
 
     return (
         <Modal open={open} onClose={onClose}>
@@ -44,7 +44,6 @@ const EditEmployeeModal = ({
                 </Typography>
 
                 <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
-                    {/* Full Name */}
                     <TextField
                         label="Full Name"
                         name="name"
@@ -55,7 +54,6 @@ const EditEmployeeModal = ({
                         helperText={editErrors.name}
                     />
 
-                    {/* Email & Phone */}
                     <Box sx={{ display: "flex", flexDirection: { xs: "column", sm: "row" }, gap: 2 }}>
                         <TextField
                             label="Email"
@@ -77,7 +75,6 @@ const EditEmployeeModal = ({
                         />
                     </Box>
 
-                    {/* Gender & Age */}
                     <Box sx={{ display: "flex", flexDirection: { xs: "column", sm: "row" }, gap: 2 }}>
                         <FormControl sx={{ width: { xs: "100%", sm: "200px" } }} error={!!editErrors.gender}>
                             <InputLabel>Gender</InputLabel>
@@ -106,7 +103,6 @@ const EditEmployeeModal = ({
                         />
                     </Box>
 
-                    {/* Department & Position */}
                     <Box sx={{ display: "flex", flexDirection: { xs: "column", sm: "row" }, gap: 2 }}>
                         <FormControl sx={{ width: "100%" }} error={!!editErrors.department}>
                             <InputLabel>Department</InputLabel>
@@ -145,7 +141,6 @@ const EditEmployeeModal = ({
                         </FormControl>
                     </Box>
 
-                    {/* Employment Status */}
                     <FormControl fullWidth error={!!editErrors.employmentStatus}>
                         <InputLabel>Employment Status</InputLabel>
                         <Select
@@ -164,7 +159,6 @@ const EditEmployeeModal = ({
                         )}
                     </FormControl>
 
-                    {/* Action Buttons */}
                     <Box sx={{ display: "flex", justifyContent: "flex-end", gap: 2, mt: 2 }}>
                         <Button onClick={onClose} variant="outlined" color="secondary">
                             Cancel
