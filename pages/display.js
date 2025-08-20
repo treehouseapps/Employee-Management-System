@@ -1,7 +1,7 @@
 import {
     Box, Typography, Container, Grid, Divider, Button,
     Modal, TextField, CircularProgress, FormControl, InputLabel, Select,
-    MenuItem, FormHelperText, InputAdornment,
+    MenuItem, FormHelperText, InputAdornment, Card, Avatar,
 } from '@mui/material';
 import { useFetchedData } from '../context/DataContext';
 import SearchIcon from '@mui/icons-material/Search';
@@ -10,6 +10,8 @@ import { useState } from 'react';
 import { Email as EmailIcon, LocalPhone, InboxOutlined, Fingerprint, Wc, CalendarToday, BusinessCenter, WorkHistory } from '@mui/icons-material';
 import Navbar from '../components/navbar';
 import { useMessage } from '../context/MessageContext';
+import EditModal from '../components/modal/EditModal';
+import DeleteModal from '../components/modal/DeleteModal';
 
 const EMPLOYMENT_DEPARTEMENT = {
     1: 'Human Resources (HR)',
@@ -186,383 +188,75 @@ export default function DisplayEmployee() {
     return (
         <Box >
             <Navbar />
-            <Container
-                component="main"
-                sx={{
-                    padding: { xs: '0.5rem !important', sm: '1rem !important' },
-                    borderRadius: '.5rem',
-                    minHeight: '400px',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    maxWidth: '100% !important',
-                }}
-            >
-                <Box
-                    sx={{
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        alignItems: 'center',
-                        flexDirection: { xs: 'column', sm: 'row' },
-                        gap: '1rem',
-                        mb: 2,
-                    }}
-                >
-                    <Typography
-                        variant="h5"
-                        sx={{
-                            fontSize: { xs: '1.2rem', sm: '1.5rem' },
-                            textAlign: { xs: 'center', sm: 'left' },
-                            flexGrow: 1,
-                            fontFamily: 'Quicksand'
-                        }}
-                    >
-                        Results Overview
-                    </Typography>
+            <Grid container spacing={2}>
+                {employees.map((employee, index) => (
+                    <Grid item xs={12} sm={6} md={4} key={employee._id || index}>
+                        <Card sx={{ p: 2, boxShadow: 3, borderRadius: 2, display: 'flex', flexDirection: 'column', gap: 1 }}>
+                            <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 1 }}>
+                                {/* Profile Photo */}
 
-                    <TextField
-                        size="small"
-                        variant="outlined"
-                        placeholder="Search"
-                        sx={{
-                            backgroundColor: 'white',
-                            borderRadius: '5px',
-                            width: { xs: '100%', sm: '300px' },
-                        }}
-                        InputProps={{
-                            endAdornment: (
-                                <InputAdornment position="end">
-                                    <SearchIcon sx={{ cursor: 'pointer' }} />
-                                </InputAdornment>
-                            ),
-                        }}
-                    />
-                </Box>
-
-                <Divider sx={{ marginBottom: '1rem', width: '100%' }} />
-
-                {loading ? (
-                    <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flex: 1 }}>
-                        <CircularProgress />
-                    </Box>
-                ) : !employees || employees.length === 0 ? (
-                    <Box sx={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        flex: 1,
-                        minHeight: '200px'
-                    }}>
-                        <InboxOutlined sx={{ fontSize: 60, color: 'grey.400', mb: 2 }} />
-                        <Typography variant="h6" color="text.secondary">
-                            No employees found
-                        </Typography>
-                    </Box>
-                ) : (
-                    // Listing Users
-
-                    <Grid
-                        container
-                        sx={{
-                            bgcolor: 'white',
-                            borderRadius: 2,
-                            boxShadow: '0 4px 16px rgba(0,0,0,0.08)',
-                            fontFamily: 'Quicksand',
-                            margin: 'auto',
-                            userSelect: 'none',
-                        }}
-                    >
-                        {/* Header Row */}
-                        <Grid
-                            container
-                            sx={{
-                                borderBottom: '3px solid #7F00FF',
-                                color: '#7F00FF',
-                                fontWeight: 'bold',
-                                fontSize: '0.85rem',
-                                paddingY: 1,
-                                textAlign: 'center',
-                                alignItems: 'center',
-                            }}
-                        >
-                            <Grid item xs={1}>No</Grid>
-                            <Grid item xs sx={{ textAlign: 'left' }}>Name & Position</Grid>
-                            <Grid item xs={3}>Email</Grid>
-                            <Grid item xs sx={{ textAlign: 'left' }}>Department</Grid>
-                            <Grid item xs={2}>Status</Grid>
-                            <Grid item xs={2} />
-                        </Grid>
-
-                        {/* Data Rows */}
-                        {employees.map((employee, index) => (
-                            <Grid
-                                container
-                                key={employee._id || index}
-                                sx={{
-                                    bgcolor: index % 2 === 0 ? '#f9f9f9' : 'transparent',
-                                    alignItems: 'center',
-                                    paddingY: 1,
-                                    paddingX: 1,
-                                    fontSize: { xs: '0.75rem', sm: '0.875rem' },
-                                    color: '#333',
-                                    '&:hover': { bgcolor: '#eae6ff' },
-                                }}
-                            >
-                                <Grid item xs={1} textAlign="center" fontWeight={600}>
-                                    {index + 1}
-                                </Grid>
-
-                                <Grid item xs sx={{ display: 'flex', flexDirection: 'column', gap: 0.2 }}>
-                                    <Typography
-                                        fontWeight={600}
-                                        sx={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}
-                                    >
+                                <Avatar
+                                    src={employee.profilePhoto || '/default-profile.png'}
+                                    alt={employee.name}
+                                    sx={{ width: 56, height: 56 }}
+                                />
+                                <Box sx={{ flexGrow: 1 }}>
+                                    <Typography variant="h6" sx={{ fontWeight: 600 }}>
                                         {employee.name}
                                     </Typography>
-                                    <Typography
-                                        variant="caption"
-                                        color="text.secondary"
-                                        sx={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}
-                                    >
+                                    <Typography variant="body2" color="text.secondary">
                                         {employee.position}
                                     </Typography>
-                                </Grid>
-
-                                <Grid item xs={3} sx={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', display: 'flex', alignItems: 'center', gap: 0.5 }}>
-                                    <EmailIcon fontSize="small" /> {employee.email}
-                                </Grid>
-
-                                <Grid item xs sx={{ display: 'flex', alignItems: 'center', gap: 0.5, textTransform: 'capitalize', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                                    <BusinessCenter fontSize="small" /> {getEmploymentDepartementText(employee.department)}
-                                </Grid>
-
-                                <Grid item xs={2} sx={{ display: 'flex', alignItems: 'center', gap: 0.5, fontWeight: 600, color: employee.employmentStatus === 'Full Time' ? '#388e3c' : '#f57c00', textTransform: 'capitalize' }}>
-                                    <WorkHistory fontSize="small" /> {employee.employmentStatus || 'N/A'}
-                                </Grid>
-
-                                <Grid item xs={2} sx={{ display: 'flex', justifyContent: 'flex-end', gap: 1 }}>
-                                    {employee.empStatus === 'edited' && <EditIcon color="primary" sx={{ fontSize: 20, alignSelf: 'center', mr: 1 }} />}
-                                    <Button variant="outlined" color="success" size="small" sx={{ fontWeight: 'bold', textTransform: 'none' }} onClick={() => handleEditClick(employee)}>Edit</Button>
-                                    <Button variant="outlined" color="error" size="small" sx={{ fontWeight: 'bold', textTransform: 'none' }} onClick={() => handleDeleteClick(employee)}>Delete</Button>
-                                </Grid>
-                            </Grid>
-                        ))}
-                    </Grid>
-
-
-                )}
-
-                {/* Edit Modal */}
-
-                {tempEmpData && (
-                    <Modal open={Boolean(tempEmpData)} onClose={handleClose}>
-                        <Box
-                            sx={{
-                                position: 'absolute',
-                                top: '50%',
-                                left: '50%',
-                                transform: 'translate(-50%, -50%)',
-                                width: { xs: '95%', sm: '600px' },
-                                maxHeight: { xs: '90vh', sm: '80vh' },
-                                overflow: 'auto',
-                                bgcolor: 'white',
-                                borderRadius: '8px',
-                                boxShadow: 24,
-                                p: { xs: 2, sm: 4 },
-                            }}
-                        >
-                            <Typography variant="h6" component="h2" mb={2}>
-                                Edit Employee
-                            </Typography>
-                            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-                                <TextField
-                                    label="Full Name"
-                                    name="name"
-                                    value={tempEmpData.name}
-                                    onChange={handleInputChange}
-                                    fullWidth
-                                    error={!!editErrors.name}
-                                    helperText={editErrors.name}
-                                />
-                                <Box sx={{ display: 'flex', gap: 2 }}>
-                                    <TextField
-                                        label="Email"
-                                        name="email"
-                                        value={tempEmpData.email}
-                                        onChange={handleInputChange}
-                                        fullWidth
-                                        error={!!editErrors.email}
-                                        helperText={editErrors.email}
-                                    />
-                                    <TextField
-                                        label="Phone"
-                                        name="phoneNumber"
-                                        value={tempEmpData.phoneNumber}
-                                        onChange={handleInputChange}
-                                        sx={{ width: '200px' }}
-                                        error={!!editErrors.phoneNumber}
-                                        helperText={editErrors.phoneNumber}
-                                    />
                                 </Box>
-                                <Box sx={{ display: 'flex', gap: 2 }}>
-                                    <FormControl
-                                        sx={{ width: '200px' }}
-                                        error={!!editErrors.gender}
-                                    >
-                                        <InputLabel>Gender</InputLabel>
-                                        <Select
-                                            name="gender"
-                                            value={tempEmpData.gender}
-                                            label="Gender"
-                                            onChange={handleInputChange}
-                                        >
-                                            <MenuItem value="Male">Male</MenuItem>
-                                            <MenuItem value="Female">Female</MenuItem>
-                                        </Select>
-                                        {editErrors.gender && (
-                                            <FormHelperText>{editErrors.gender}</FormHelperText>
-                                        )}
-                                    </FormControl>
-                                    <TextField
-                                        label="Age"
-                                        name="age"
-                                        type="number"
-                                        value={tempEmpData.age}
-                                        onChange={handleInputChange}
-                                        sx={{ width: '150px' }}
-                                        error={!!editErrors.age}
-                                        helperText={editErrors.age}
-                                        InputProps={{ inputProps: { min: 18, max: 100 } }}
-                                    />
-                                </Box>
-                                <Box sx={{ display: 'flex', gap: 2 }}>
-                                    <FormControl
-                                        sx={{ width: '50%' }}
-                                        error={!!editErrors.department}
-                                    >
-                                        <InputLabel>Department</InputLabel>
-                                        <Select
-                                            name="department"
-                                            value={tempEmpData.department || ''}
-                                            label="Department"
-                                            onChange={handleInputChange}
-                                        >
-                                            <MenuItem value={1}>Human Resources (HR)</MenuItem>
-                                            <MenuItem value={2}>Finance & Accounting</MenuItem>
-                                            <MenuItem value={3}>Marketing & Sales</MenuItem>
-                                            <MenuItem value={4}>Operations</MenuItem>
-                                            <MenuItem value={5}>IT/Engineering</MenuItem>
-                                        </Select>
-                                        {editErrors.department && (
-                                            <FormHelperText>{editErrors.department}</FormHelperText>
-                                        )}
-                                    </FormControl>
-                                    <FormControl
-                                        sx={{ width: '50%' }}
-                                        error={!!editErrors.position}
-                                    >
-                                        <InputLabel>Position</InputLabel>
-                                        <Select
-                                            name="position"
-                                            value={tempEmpData.position}
-                                            label="Position"
-                                            onChange={handleInputChange}
-                                        >
-                                            <MenuItem value="Team Leader">Team Leader</MenuItem>
-                                            <MenuItem value="Assistant">Assistant</MenuItem>
-                                            <MenuItem value="Member">Member</MenuItem>
-                                        </Select>
-                                        {editErrors.position && (
-                                            <FormHelperText>{editErrors.position}</FormHelperText>
-                                        )}
-                                    </FormControl>
-                                </Box>
-                                <FormControl
-                                    fullWidth
-                                    error={!!editErrors.employmentStatus}
+                                <Typography
+                                    variant="caption"
+                                    sx={{
+                                        color: employee.employmentStatus === 'Full Time' ? '#388e3c' : '#f57c00',
+                                        fontWeight: 600,
+                                        textTransform: 'capitalize',
+                                    }}
                                 >
-                                    <InputLabel>Employment Status</InputLabel>
-                                    <Select
-                                        name="employmentStatus"
-                                        value={tempEmpData.employmentStatus}
-                                        label="Employment Status"
-                                        onChange={handleInputChange}
-                                    >
-                                        <MenuItem value={"Full Time"}>Full Time</MenuItem>
-                                        <MenuItem value={'Part Time'}>Part Time</MenuItem>
-                                        <MenuItem value={'Contract'}>Contract</MenuItem>
-                                        <MenuItem value={'Internship'}>Internship</MenuItem>
-                                    </Select>
-                                    {editErrors.employmentStatus && (
-                                        <FormHelperText>{editErrors.employmentStatus}</FormHelperText>
-                                    )}
-                                </FormControl>
-                                <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 2, mt: 2 }}>
-                                    <Button onClick={handleClose} variant="outlined" color="secondary">
-                                        Cancel
-                                    </Button>
-                                    <Button
-                                        onClick={handleSave}
-                                        variant="contained"
-                                        color="primary"
-                                        sx={{
-                                            padding: '0.8rem 2rem',
-                                            fontSize: '1.1rem',
-                                            fontWeight: 'bold'
-                                        }}
-                                    >
-                                        Save Changes
-                                    </Button>
-                                </Box>
+                                    {employee.employmentStatus || 'N/A'}
+                                </Typography>
                             </Box>
-                        </Box>
-                    </Modal>
-                )}
 
-                {/* Delete Modal */}
+                            <Typography variant="body2" color="text.secondary" noWrap>
+                                <EmailIcon fontSize="small" sx={{ verticalAlign: 'middle', mr: 0.5 }} /> {employee.email}
+                            </Typography>
+                            <Typography variant="body2" color="text.secondary" noWrap>
+                                <BusinessCenter fontSize="small" sx={{ verticalAlign: 'middle', mr: 0.5 }} />{' '}
+                                {getEmploymentDepartementText(employee.department)}
+                            </Typography>
 
-                <Modal
-                    open={deleteConfirmation.open}
-                    onClose={handleCloseDeleteModal}
-                >
-                    <Box
-                        sx={{
-                            position: 'absolute',
-                            top: '50%',
-                            left: '50%',
-                            transform: 'translate(-50%, -50%)',
-                            width: { xs: '90%', sm: '400px' },
-                            bgcolor: 'background.paper',
-                            borderRadius: '8px',
-                            boxShadow: 24,
-                            p: { xs: 2, sm: 4 },
-                        }}
-                    >
-                        <Typography variant="h6" component="h2" mb={2}>
-                            Confirm Delete
-                        </Typography>
-                        <Typography mb={3}>
-                            Are you sure you want to delete {deleteConfirmation.employeeName}? This action cannot be undone.
-                        </Typography>
-                        <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 2 }}>
-                            <Button
-                                onClick={handleCloseDeleteModal}
-                                variant="outlined"
-                            >
-                                Cancel
-                            </Button>
-                            <Button
-                                onClick={handleDelete}
-                                variant="contained"
-                                color="error"
-                            >
-                                Delete
-                            </Button>
-                        </Box>
-                    </Box>
-                </Modal>
-            </Container>
+                            <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 1, mt: 1, flexWrap: 'wrap' }}>
+                                {employee.empStatus === 'edited' && <EditIcon color="primary" sx={{ fontSize: 20 }} />}
+                                <Button
+                                    variant="outlined"
+                                    color="success"
+                                    size="small"
+                                    sx={{ fontWeight: 'bold', textTransform: 'none' }}
+                                    onClick={() => handleEditClick(employee)}
+                                >
+                                    Edit
+                                </Button>
+                                <Button
+                                    variant="outlined"
+                                    color="error"
+                                    size="small"
+                                    sx={{ fontWeight: 'bold', textTransform: 'none' }}
+                                    onClick={() => handleDeleteClick(employee)}
+                                >
+                                    Delete
+                                </Button>
+                            </Box>
+                        </Card>
+                    </Grid>
+                ))}
+            </Grid>
+
+
+
+
         </Box >
     );
 }
