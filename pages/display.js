@@ -4,7 +4,7 @@ import {
     MenuItem, FormHelperText, InputAdornment, Card, Avatar,
 } from '@mui/material';
 import { useFetchedData } from '../context/DataContext';
-import SearchIcon from '@mui/icons-material/Search';
+import Search from '@mui/icons-material/Search';
 import EditIcon from '@mui/icons-material/Edit';
 import { useState } from 'react';
 import { Email as EmailIcon, LocalPhone, InboxOutlined, Fingerprint, Wc, CalendarToday, BusinessCenter, WorkHistory } from '@mui/icons-material';
@@ -195,6 +195,7 @@ export default function DisplayEmployee() {
                     py: 1,
                 }}
             >
+                {/* Title */}
                 <Typography
                     variant="h3"
                     component="h1"
@@ -202,21 +203,52 @@ export default function DisplayEmployee() {
                         fontWeight: "bold",
                         color: "text.primary",
                         fontSize: { xs: "1.5rem", md: "2.5rem" },
+                        mb: 2,
                     }}
                 >
                     Meet Our Team
                 </Typography>
 
-                <Typography
-                    variant="subtitle1"
+                {/* Subtitle + Search in one row */}
+                <Box
                     sx={{
-                        color: "text.secondary",
-                        fontSize: { xs: "1rem", md: "1.25rem" },
+                        display: "flex",
+                        flexDirection: { xs: "column", md: "row" },
+                        alignItems: "center",
+                        justifyContent: "center",
+                        gap: 2,
                     }}
                 >
-                    Dedicated professionals who power our organization.
-                </Typography>
+                    <Typography
+                        variant="subtitle1"
+                        sx={{
+                            color: "text.secondary",
+                            fontSize: { xs: "1rem", md: "1.25rem" },
+                        }}
+                    >
+                        Dedicated professionals who power our organization.
+                    </Typography>
+
+                    <TextField
+                        size="small"
+                        variant="outlined"
+                        placeholder="Search"
+                        sx={{
+                            backgroundColor: "white",
+                            borderRadius: "5px",
+                            width: { xs: "100%", md: "250px" },
+                        }}
+                        InputProps={{
+                            endAdornment: (
+                                <InputAdornment position="end">
+                                    <Search sx={{ cursor: "pointer" }} />
+                                </InputAdornment>
+                            ),
+                        }}
+                    />
+                </Box>
             </Box>
+
             <Grid container spacing={2} sx={{ my: { xs: '0rem', sm: '1rem' } }}>
                 {employees.map((employee, index) => (
                     <Grid item xs={12} sm={6} md={4} key={employee._id || index}>
