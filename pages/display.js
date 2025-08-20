@@ -188,15 +188,49 @@ export default function DisplayEmployee() {
     return (
         <Box >
             <Navbar />
-            <Grid container spacing={2}>
+            <Box
+                sx={{
+                    textAlign: "center",
+                    px: 2,
+                    py: 1,
+                }}
+            >
+                <Typography
+                    variant="h3"
+                    component="h1"
+                    sx={{
+                        fontWeight: "bold",
+                        color: "text.primary",
+                        fontSize: { xs: "1.5rem", md: "2.5rem" },
+                    }}
+                >
+                    Meet Our Team
+                </Typography>
+
+                <Typography
+                    variant="subtitle1"
+                    sx={{
+                        color: "text.secondary",
+                        fontSize: { xs: "1rem", md: "1.25rem" },
+                    }}
+                >
+                    Dedicated professionals who power our organization.
+                </Typography>
+            </Box>
+            <Grid container spacing={2} sx={{ my: { xs: '0rem', sm: '1rem' } }}>
                 {employees.map((employee, index) => (
                     <Grid item xs={12} sm={6} md={4} key={employee._id || index}>
                         <Card sx={{ p: 2, boxShadow: 3, borderRadius: 2, display: 'flex', flexDirection: 'column', gap: 1 }}>
                             <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 1 }}>
-                                {/* Profile Photo */}
 
                                 <Avatar
-                                    src={employee.profilePhoto || '/default-profile.png'}
+                                    src={
+                                        employee.profilePhoto
+                                            ? employee.profilePhoto
+                                            : employee.gender === "Male"
+                                                ? "/man.svg"
+                                                : "/woman.svg"
+                                    }
                                     alt={employee.name}
                                     sx={{ width: 56, height: 56 }}
                                 />
@@ -253,10 +287,6 @@ export default function DisplayEmployee() {
                     </Grid>
                 ))}
             </Grid>
-
-
-
-
         </Box >
     );
 }
