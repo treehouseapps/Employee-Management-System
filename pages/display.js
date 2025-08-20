@@ -256,77 +256,91 @@ export default function DisplayEmployee() {
                     />
                 </Box>
             </Box>
+            {filteredMembers.length === 0 ? (
+                <Box
+                    display="flex"
+                    justifyContent="center"
+                    alignItems="center"
+                    height="200px"
+                    bgcolor="#f5f5f5"
+                    borderRadius={2}
+                    my={2}
+                >
+                    <Typography variant="h6" color="textSecondary">
+                        No employees found
+                    </Typography>
+                </Box>
+            ) : (
+                <Grid container spacing={2} sx={{ my: { xs: '0rem', sm: '1rem' } }}>
+                    {filteredMembers.map((employee, index) => (
+                        <Grid item xs={12} sm={6} md={4} key={employee._id || index}>
+                            <Card sx={{ p: 2, boxShadow: 3, borderRadius: 2, display: 'flex', flexDirection: 'column', gap: 1 }}>
+                                <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 1 }}>
 
-            <Grid container spacing={2} sx={{ my: { xs: '0rem', sm: '1rem' } }}>
-                {filteredMembers.map((employee, index) => (
-                    <Grid item xs={12} sm={6} md={4} key={employee._id || index}>
-                        <Card sx={{ p: 2, boxShadow: 3, borderRadius: 2, display: 'flex', flexDirection: 'column', gap: 1 }}>
-                            <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 1 }}>
-
-                                <Avatar
-                                    src={
-                                        employee.profilePhoto
-                                            ? employee.profilePhoto
-                                            : employee.gender === "Male"
-                                                ? "/man.svg"
-                                                : "/woman.svg"
-                                    }
-                                    alt={employee.name}
-                                    sx={{ width: 56, height: 56 }}
-                                />
-                                <Box sx={{ flexGrow: 1 }}>
-                                    <Typography variant="h6" sx={{ fontWeight: 600 }}>
-                                        {employee.name}
-                                    </Typography>
-                                    <Typography variant="body2" color="text.secondary">
-                                        {employee.position}
+                                    <Avatar
+                                        src={
+                                            employee.profilePhoto
+                                                ? employee.profilePhoto
+                                                : employee.gender === "Male"
+                                                    ? "/man.svg"
+                                                    : "/woman.svg"
+                                        }
+                                        alt={employee.name}
+                                        sx={{ width: 56, height: 56 }}
+                                    />
+                                    <Box sx={{ flexGrow: 1 }}>
+                                        <Typography variant="h6" sx={{ fontWeight: 600 }}>
+                                            {employee.name}
+                                        </Typography>
+                                        <Typography variant="body2" color="text.secondary">
+                                            {employee.position}
+                                        </Typography>
+                                    </Box>
+                                    <Typography
+                                        variant="caption"
+                                        sx={{
+                                            color: employee.employmentStatus === 'Full Time' ? '#388e3c' : '#f57c00',
+                                            fontWeight: 600,
+                                            textTransform: 'capitalize',
+                                        }}
+                                    >
+                                        {employee.employmentStatus || 'N/A'}
                                     </Typography>
                                 </Box>
-                                <Typography
-                                    variant="caption"
-                                    sx={{
-                                        color: employee.employmentStatus === 'Full Time' ? '#388e3c' : '#f57c00',
-                                        fontWeight: 600,
-                                        textTransform: 'capitalize',
-                                    }}
-                                >
-                                    {employee.employmentStatus || 'N/A'}
+
+                                <Typography variant="body2" color="text.secondary" noWrap>
+                                    <EmailIcon fontSize="small" sx={{ verticalAlign: 'middle', mr: 0.5 }} /> {employee.email}
                                 </Typography>
-                            </Box>
+                                <Typography variant="body2" color="text.secondary" noWrap>
+                                    <BusinessCenter fontSize="small" sx={{ verticalAlign: 'middle', mr: 0.5 }} />{' '}
+                                    {getEmploymentDepartementText(employee.department)}
+                                </Typography>
 
-                            <Typography variant="body2" color="text.secondary" noWrap>
-                                <EmailIcon fontSize="small" sx={{ verticalAlign: 'middle', mr: 0.5 }} /> {employee.email}
-                            </Typography>
-                            <Typography variant="body2" color="text.secondary" noWrap>
-                                <BusinessCenter fontSize="small" sx={{ verticalAlign: 'middle', mr: 0.5 }} />{' '}
-                                {getEmploymentDepartementText(employee.department)}
-                            </Typography>
-
-                            <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 1, mt: 1, flexWrap: 'wrap' }}>
-                                {employee.empStatus === 'edited' && <EditIcon color="primary" sx={{ fontSize: 20 }} />}
-                                <Button
-                                    variant="outlined"
-                                    color="success"
-                                    size="small"
-                                    sx={{ fontWeight: 'bold', textTransform: 'none' }}
-                                    onClick={() => handleEditClick(employee)}
-                                >
-                                    Edit
-                                </Button>
-                                <Button
-                                    variant="outlined"
-                                    color="error"
-                                    size="small"
-                                    sx={{ fontWeight: 'bold', textTransform: 'none' }}
-                                    onClick={() => handleDeleteClick(employee)}
-                                >
-                                    Delete
-                                </Button>
-                            </Box>
-                        </Card>
-                    </Grid>
-                ))}
-            </Grid>
+                                <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 1, mt: 1, flexWrap: 'wrap' }}>
+                                    {employee.empStatus === 'edited' && <EditIcon color="primary" sx={{ fontSize: 20 }} />}
+                                    <Button
+                                        variant="outlined"
+                                        color="success"
+                                        size="small"
+                                        sx={{ fontWeight: 'bold', textTransform: 'none' }}
+                                        onClick={() => handleEditClick(employee)}
+                                    >
+                                        Edit
+                                    </Button>
+                                    <Button
+                                        variant="outlined"
+                                        color="error"
+                                        size="small"
+                                        sx={{ fontWeight: 'bold', textTransform: 'none' }}
+                                        onClick={() => handleDeleteClick(employee)}
+                                    >
+                                        Delete
+                                    </Button>
+                                </Box>
+                            </Card>
+                        </Grid>
+                    ))}
+                </Grid>)}
         </Box >
     );
 }

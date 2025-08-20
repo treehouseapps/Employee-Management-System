@@ -7,14 +7,18 @@ const Layout = ({ children }) => {
         <>
             <Sidebar />
             <Box
+                display="flex"
+                flexDirection="column"
+                minHeight="100vh"
                 sx={{
                     marginLeft: { xs: 0, md: '250px' },
                     paddingTop: 0,
-                    minHeight: '100vh',
                     backgroundColor: 'white',
                 }}
             >
-                {children}
+                <Box flexGrow={1}>
+                    {children}
+                </Box>
                 <Footer />
             </Box>
         </>
