@@ -183,6 +183,12 @@ export default function DisplayEmployee() {
         setTempEmpData(null);
         setEditErrors({});
     };
+    const [searchTerm, setSearchTerm] = useState("");
+
+    const filteredMembers = employees.filter(
+        (member) =>
+            member.name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
 
     const getEmploymentDepartementText = (id) => EMPLOYMENT_DEPARTEMENT[id] || 'Unknown';
     return (
@@ -232,12 +238,14 @@ export default function DisplayEmployee() {
                     <TextField
                         size="small"
                         variant="outlined"
+                        value={searchTerm}
                         placeholder="Search"
                         sx={{
                             backgroundColor: "white",
                             borderRadius: "5px",
                             width: { xs: "100%", md: "250px" },
                         }}
+                        onChange={(e) => setSearchTerm(e.target.value)}
                         InputProps={{
                             endAdornment: (
                                 <InputAdornment position="end">
@@ -250,7 +258,7 @@ export default function DisplayEmployee() {
             </Box>
 
             <Grid container spacing={2} sx={{ my: { xs: '0rem', sm: '1rem' } }}>
-                {employees.map((employee, index) => (
+                {filteredMembers.map((employee, index) => (
                     <Grid item xs={12} sm={6} md={4} key={employee._id || index}>
                         <Card sx={{ p: 2, boxShadow: 3, borderRadius: 2, display: 'flex', flexDirection: 'column', gap: 1 }}>
                             <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 1 }}>
