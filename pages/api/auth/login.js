@@ -1,39 +1,41 @@
-import { ObjectId } from 'mongodb';
-import connectToDatabase from '../connection';
-import { signToken } from '../../../utils/jwt';
+import { ObjectId } from "mongodb";
+import connectToDatabase from "../connection";
+import { signToken } from "../../../utils/jwt";
 
 export default async function handler(req, res) {
-    if (req.method !== 'POST') {
-        return res.status(405).json({ message: 'Method Not Allowed' });
+  if (req.method !== "POST") {
+    return res.status(405).json({ message: "Method Not Allowed" });
+  }
+
+  try {
+    const { username, password } = req.body;
+
+    if (!username || !password) {
+      return res
+        .status(400)
+        .json({ message: "Username and password required" });
     }
 
-    try {
-        const { username, password } = req.body;
+    const { db } = await connectToDatabase();
+    const user = await db.collection("users").findOne({ username, password });
 
-        if (!username || !password) {
-            return res.status(400).json({ message: 'Username and password required' });
-        }
-
-        const { db } = await connectToDatabase();
-        const user = await db.collection('users').findOne({ username, password });
-
-        if (!user) {
-            return res.status(401).json({ message: 'User not found' });
-        }
-
-        const payload = {
-            id: user._id,
-            username: user.username,
-        };
-
-        const token = signToken(payload);
-
-        res.status(200).json({
-            message: 'Login successful',
-            token,
-            user: { id: user._id, username: user.username },
-        });
-    } catch (error) {
-        res.status(500).json({ message: 'Error login user', error: error.message });
+    if (!user) {
+      return res.status(401).json({ message: "User not found" });
     }
+
+    const payload = {
+      id: user._id,
+      username: user.username,
+    };
+
+    const token = signToken(payload);
+
+    res.status(200).json({
+      message: "Login successful",
+      token,
+      user: { id: user._id, username: user.username },
+    });
+  } catch (error) {
+    res.status(500).json({ message: "Error login user", error: error.message });
+  }
 }
